@@ -5,7 +5,7 @@
 
   // @brief   page principale, le début est extrait de la page index.php de testlink
   // @author  Cyril SANTUNE
-  // @version 8 (2015-10-06)
+  // @version 10 (2015-10-16): changement du texte pour le contact de l'administrateur
 
 
 
@@ -115,7 +115,8 @@ if($redir2login)
     //session_destroy();
     unset($_SESSION['db_table_node_types']);
     unset($_SESSION['db_table_projects']);
-    unset($_SESSION['views_created']);
+    // le faire uniquement en début de session
+    //unset($_SESSION['views_created']);
   }
 
   // vérifier si les tables sont déjà chargées
@@ -184,9 +185,15 @@ if($redir2login)
   echo("<HTML>\n");
   echo("  <HEAD>\n");
   echo("    <TITLE>STATISTICS</TITLE>\n");
+  echo("    <LINK REL='stylesheet' TYPE='text/css' HREF='cs_stats.css'/>");
   echo("  </HEAD>\n");
   echo("<BODY ONLOAD='disableselect();'>\n");
+  echo("<TABLE style='width:100%;'><TR><TD>");
   echo("<A HREF='cs_stats.php?session_reset=yes'>Reset</A>\n");
+  echo("</TD><TD style='text-align:right'>");
+  echo("<A HREF='mailto:cyril.santune@gmail.com?Subject=testlink-cs_stats'>Contact administrator</A>");
+  echo("</TD></TR></TABLE>");
+
 
 
 
@@ -196,22 +203,27 @@ if($redir2login)
 
 
 
-  echo("<B>RESULTS</B>");
-  echo("<TABLE BORDER='1'CELLSPACING='2' CELLPADDING='8'>");
+  echo("<H2>RESULTS</H2>");
+  echo("<TABLE id='cs_table_result'>");
   echo("<TR>");
-  echo("<TD><B>Testsuite</B></TD>");
-  echo("<TD><B>Status</B></TD>");
-  echo("<TD><B>Test executed %</B></TD>");
+  echo("<TH>Testsuite</TD>");
+  echo("<TH>Status</TD>");
+  echo("<TH>Test executed %</TD>");
   if($_GET['show_coverage'])
   {
-    echo("<TD><B>Coverage %</B></TD>");
+    echo("<TH>Coverage %</TD>");
   }
   echo("</TR>");
 
 
+
+
+
+
   foreach($table_results as &$testsuite)
   {
-    echo("<TR><TD>");
+    echo("<TR CLASS='hide_".$testsuite["level"]."'>");
+    echo("<TD>");
     // créer des espaces en fonction du level
     echo(str_repeat("&nbsp;", $testsuite["level"] * 3));
     echo($testsuite["name"]);
@@ -240,10 +252,11 @@ if($redir2login)
       echo(get_percent_html_table($percent_coverage));
       echo("</TD>");
     }
+    echo("</TR>");
   }
   unset($testsuite);
   echo("<TR>");
-  echo("<TD><B>Total</B></TD>");
+  echo("<TH>Total</TH>");
   echo("<TD>");
   echo(get_status_html_table(
     $stats_table["notrun"],
@@ -274,6 +287,10 @@ if($redir2login)
   echo("</TABLE>");
 
 
+  if($_GET['hide_ts'] == "on")
+  {
+    echo("<SCRIPT>toggle_testsuite(2,".$tree_level_max.")</SCRIPT>");
+  }
 
   echo("</BODY>\n");
   echo("</HTML>\n");

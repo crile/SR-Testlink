@@ -5,7 +5,7 @@
 
   // @brief   fonction diverses
   // @author  Cyril SANTUNE
-  // @version 8 (2015-10-06)
+  // @version 9 (2015-10-16): modification liée au feuille de style
 
 
 
@@ -103,18 +103,18 @@
       $blocked = 0;
     }
 
-    $output = $output."<TABLE cellspacing='0' cellpadding='2'>";
+    $output = $output."<TABLE style='margin:2; border:0; padding:2; border-spacing:0;'>";
     $output = $output."  <TR>";
-    $output = $output."    <TD BGCOLOR='".$not_run_color."'>";
+    $output = $output."    <TD style='padding:2; border:none; background:".$not_run_color."'>";
     $output = $output.$not_run;
     $output = $output."    </TD>";
-    $output = $output."    <TD BGCOLOR='".$passed_color."'>";
+    $output = $output."    <TD style='padding:2; border:none; background:".$passed_color."'>";
     $output = $output.$passed;
     $output = $output."    </TD>";
-    $output = $output."    <TD BGCOLOR='".$failed_color."'>";
+    $output = $output."    <TD style='padding:2; border:none; background:".$failed_color."'>";
     $output = $output.$failed;
     $output = $output."    </TD>";
-    $output = $output."    <TD BGCOLOR='".$blocked_color."'>";
+    $output = $output."    <TD style='padding:2; border:none; background:".$blocked_color."'>";
     $output = $output.$blocked;
     $output = $output."    </TD>";
     $output = $output."  </TR>";
@@ -134,23 +134,23 @@
     $percent_color = '#00FF00';
     $empty_color = '#FF0000';
 
-    $output = "<TABLE cellspacing='0' cellpadding='2'>";
+    $output = "<TABLE style='margin:2; border:0; padding:2; border-spacing:0;'>";
     $output = $output."<TR>";
     $i = 1;
     while($i <= ($percent / 10))
     {
-      $output = $output."<TD BGCOLOR='".$percent_color."'>";
+      $output = $output."<TD style='border:0; padding:2; background:".$percent_color.";'>";
       $output = $output." </TD>";
       $i = $i + 1;
     }
     while($i <= 10)
     {
-      $output = $output."<TD BGCOLOR='".$empty_color."'>";
+      $output = $output."<TD style='border:0; padding:2; background:".$empty_color.";'>";
       $output = $output." </TD>";
       $i = $i + 1;
     }
 
-    $output = $output."<TD>";
+    $output = $output."<TD style='border:0; padding:2;'>";
     $output = $output.$percent."%";
     $output = $output."</TD>";
     $output = $output."</TR>";

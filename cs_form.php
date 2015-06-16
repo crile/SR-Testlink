@@ -5,7 +5,7 @@
 
   // @brief   FROM HTML
   // @author  Cyril SANTUNE
-  // @version 8 (2015-10-06)
+  // @version 9 (2015-10-16)
 
 
 
@@ -17,7 +17,9 @@
 
   // pour le testproject
 
-  echo("testproject:\n");
+  echo("<BR><FIELDSET>");
+  echo("<LEGEND>Project & Testplan</LEGEND>");
+  echo("project : ");
   $select_id = "pj_id";
   echo("<SELECT ID='".$select_id."' NAME='".$select_id."' ACTION='#'
     onchange='reload(\"".$select_id."\",\"\")'>\n");
@@ -43,7 +45,7 @@
 
   // pour les testplans
 
-  echo("<BR>testplan:\n");
+  echo("testplan : ");
   echo("<SELECT ID='tp_id' NAME='tp_id' ACTION='#' onchange='reload(\"tp_id\",\"pj_id="
     .$_GET['pj_id']."\")'>\n");
   echo("<OPTION VALUE=''></OPTION>\n");
@@ -63,16 +65,19 @@
     }
   }
   echo("</SELECT>\n");
+  echo("</FIELDSET>");
 
 
 
 
-  // pour les builds
 
   // à afficher uniquement si le testplan est selectionné
   if( $_GET['tp_id'] )
   {
-    echo("<BR>build:<BR>\n");
+
+    // pour les builds
+    echo("<BR><FIELDSET>");
+    echo("<LEGEND>Build</LEGEND>");
     // plutot qu'un select multiple faire plusieurs checkbox
     $db_table_builds = get_table_builds($_GET['tp_id']);
     // reconstruire un tableau d'après la liste de builds selectionnées 
@@ -84,10 +89,10 @@
       $build_id_selected[$id] = $id;
     }
 
-    // pour tous les builds
-    // pour la présentation sauter une ligne toutes les 3 builds
+    // pour toutes les builds
+    // pour la présentation sauter une ligne toutes les 4 builds
     $i = 1;
-    echo("<TABLE><TR>");
+    echo("<TABLE CLASS='cs_form_table'><TR>");
     foreach($db_table_builds as &$build)
     {
       echo("<TD>");
@@ -103,31 +108,54 @@
       echo($build["name"]." (".$build["release_date"].")");
       echo("</INPUT>");
       echo("</TD>");
-      // sauter une ligne toutes les 3 builds
-      if($i == 3)
+      // sauter une ligne toutes les 4 builds
+      if($i == 4)
       {
         echo("</TR><TR>");
-        $i = 1;
+        $i = 0;
       }
       $i = $i + 1;
     }
     echo("</TR></TABLE>");
+    echo("</FIELDSET>");
+
+
+
+    echo("<BR><FIELDSET>");
+    echo("<LEGEND>Display</LEGEND>");
+    echo("hide low level testsuite : ");
+    $input = "<INPUT TYPE='checkbox' NAME='hide_ts'";
+    if($_GET['hide_ts'] == "on")
+    {
+      $input = $input." CHECKED";
+    }
+    $input = $input." ONCLICK='toggle_testsuite(2,".$tree_level_max.")'>";
+    $input = $input."</INPUT>";
+    echo($input);
+
+
+
+
+    // pour la couverture
+
+    echo("<BR>coverage:");
+    // après avoir recharger le page, placer la liste sur la bonne option
+    $input = "<INPUT TYPE='checkbox' NAME='show_coverage'";
+    if($_GET['show_coverage'] == "on")
+    {
+      $input = $input." CHECKED";
+    }
+    $input = $input."></INPUT>";
+    echo($input);
+    echo("</FIELDSET>");
+
+
+
   }
 
 
 
 
-  // pour la couverture
-
-  echo("<BR>coverage:");
-  // après avoir recharger le page, placer la liste sur la bonne option
-  $input = "<INPUT TYPE='checkbox' NAME='show_coverage'";
-  if($_GET['show_coverage'] == "on")
-  {
-    $input = $input." CHECKED";
-  }
-  $input = $input."></INPUT>";
-  echo($input);
 
 
 

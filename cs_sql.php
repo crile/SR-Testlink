@@ -5,7 +5,7 @@
 
   // @brief   fonctions liées à la base de donnée
   // @author  Cyril SANTUNE
-  // @version 8 (2015-10-06)
+  // @version 9 (2015-10-16): ajout de $tree_level_max
 
 
 
@@ -200,13 +200,16 @@
 
 
 
-  // @brief créer le tableau $table_results
+  // @brief créer le tableau $table_results et $stats_table
+  //        sauver aussi le niveau max comme variable global $tree_level_max
   // @param array_build_id est une liste d'id de builds
   function generate_result_table($testproject_id, $testplan_id, $array_build_id, $show_coverage)
   {
     $db_table_node_types = $GLOBALS['db_table_node_types'];
     // pour les totaux
     global $stats_table;
+    // pour le niveau max dans l'arbre
+    global $tree_level_max;
 
     initialize_table_results($testplan_id);
     $table_results = $GLOBALS['table_results']; 
@@ -364,6 +367,7 @@
       }
     }
 
+    $GLOBALS["tree_level_max"] = $level_max;
     $GLOBALS["table_results"] = $table_results;
   }
 
