@@ -2,50 +2,54 @@
 
 
 
-/* @brief   feuille de style
-   @author  Cyril SANTUNE
-   @version 1 (2015-10-16)
+/* @brief  feuille de style
+   @author Cyril SANTUNE
+   @date   2015-10-16: création
+   @date   2015-10-18: réindentation et mise à jour pour la colonne status du
+           tableau résultat
+   @date   2015-10-19: ajout d'un item pour les listes ul
 */
 
 
 
 
-html, body, form, fieldset, h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul, ol, dl, address
+html, body, form, fieldset, h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul,
+ol, dl, address
 {
-	margin:0;
-	padding:0;
+  margin:        0;
+  padding:       0;
 }
 
 body
 {
-	background:  	#EEE; 
-	font-family: 	'Trebuchet MS', Arial;
-	font-size: 		14px;
-	margin:			0px;
-	padding:		0px;
+  background:    #EEE; 
+  font-family:   'Trebuchet MS', Arial;
+  font-size:     14px;
+  margin:        0px;
+  padding:       0px;
 }
 
 span, div
 {
-	margin: 		0px;
-	padding:		0px;
+  margin:        0px;
+  padding:       0px;
 }
 
 h2
 {
-  text-align: center;
-  color: #15428b;
+  text-align:    center;
+  color:         #15428b;
 }
 
 form
 {
   margin:        0;
   padding:       0;
-	text-align: 	 left;
-	margin: 		   3px;
-	padding: 		   3px 3px 50px 3px;
-	border-style:	 groove;
-	border-width:	 thin;
+  text-align:    left;
+  margin:        3px;
+  padding:       3px 3px 50px 3px;
+  border-style:  groove;
+  border-width:  thin;
   background:    #EEE;
   margin-bottom: 10px;
   margin-right:  0px;
@@ -53,12 +57,12 @@ form
 }
 
 form fieldset {
-  clear: both;
-  border-color: #99BBE8;
-  border-width: 1px;
-  border-style: solid;
-  padding: 10px;
-  margin: 0;
+  clear:         both;
+  border-color:  #99BBE8;
+  border-width:  1px;
+  border-style:  solid;
+  padding:       10px;
+  margin:        0;
 }
 
 form fieldset legend
@@ -71,57 +75,84 @@ form fieldset legend
   line-height:  15px;
 }
 
-table
+.css_ul_form
 {
-  border: none;
-  padding: 5px 10px 5px 10px;
+  padding-left: 15px;
 }
+
+/* pour les tableaux dans le formulaire */
+.css_form_table
+{
+  font:          100% 'Trebuchet MS';
+  border:        none;
+  background:    #EEE; 
+}
+
+
 
 table td
 {
-  border: none;
+  border-collapse: collapse;
+  border:          none;
+  border-spacing:  0;
+  margin:          0;
+  padding:         0;
 }
 
-#cs_table_result
+/* le tableau utilisé pour afficher passed, failed, etc 
+   ou les pourcentages */
+.css_status_table, .percent_table
 {
-  font:   100% 'Trebuchet MS';
-	color:  #000000;
-  margin: auto;
-  border-collapse:collapse;
-  border-top:1px solid #000000;
-  border-left:1px solid #000000;
-  border-right:1px solid #000000;
-  border-bottom:1px solid #000000;
-  padding: 5px 10px 5px 10px;
+  border:          none;
+  border-collapse: collapse;
+  margin:          0;
+  padding:         2;
+}
+.css_status_table td
+{
+  padding:         4;
+}
+.percent_table td
+{
+  padding:         3;
 }
 
-#cs_table_result td
+/* le tableau résultat */
+.table_result
 {
-  border-top:1px solid #000000;
-  border-left:1px solid #000000;
-  border-right:1px solid #000000;
-  border-bottom:1px solid #000000;
-  padding: 5px 10px 5px 10px;
+  font:            100% 'Trebuchet MS';
+  color:           #000000;
+  margin:          auto;
+  border-collapse: collapse;
+  border-top:      1px solid #000000;
+  border-left:     1px solid #000000;
+  border-right:    1px solid #000000;
+  border-bottom:   1px solid #000000;
+  padding:         5px 10px 5px 10px;
 }
-
-#cs_table_result th
+.table_result_td
 {
-  font:bold   100% 'Trebuchet MS';
-  border-top:1px solid #000000;
-  border-left:1px solid #000000;
-  border-right:1px solid #000000;
-  border-bottom:1px solid #000000;
-  padding: 5px 10px 5px 10px;
+  border-top:      1px solid #000000;
+  border-left:     1px solid #000000;
+  border-right:    1px solid #000000;
+  border-bottom:   1px solid #000000;
+  padding:         0px 2px 0px 2px;
 }
-
-table.cs_form_table
+/* pour la colonne status dans le tableau de résultat */
+.table_result_td_status
 {
-  font:  100% 'Trebuchet MS';
-  border: none;
+  border-top:      1px solid #000000;
+  border-left:     1px solid #000000;
+  border-left:     none;
+  border-right:    none;
+  padding:         0px 2px 0px 2px;
 }
-
-table.cs_form_table td
+.table_result_th
 {
-  font:  100% 'Trebuchet MS';
-	background:  	#EEE; 
+  font:          bold 100% 'Trebuchet MS';
+  border-top:    1px solid #000000;
+  border-left:   1px solid #000000;
+  border-right:  1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding:       5px 10px 5px 10px;
 }

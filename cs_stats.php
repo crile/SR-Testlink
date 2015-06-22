@@ -3,9 +3,16 @@
 
 
 
-  // @brief   page principale, le début est extrait de la page index.php de testlink
-  // @author  Cyril SANTUNE
-  // @version 10 (2015-10-16): changement du texte pour le contact de l'administrateur
+  // @brief  page principale, le début est extrait de la page index.php de 
+  //         testlink
+  // @author Cyril SANTUNE
+  // @date   2015-10-16: changement du texte pour le contact de l'administrateur
+  // @date   2015-10-18: ajout de graphique camembert
+  // @date   2015-10-19: remplacement de la fonction round pour les moyennes
+  //         puisque round peut faire un arrondie superieur donc par exemple
+  //         obtenir 100% alors que tous les tests ne sont pas passés.
+  //         Ajout de class name sur les TRs du tableau résultat pour un 
+  //         filtrage futur (dans le javascript)
 
 
 
@@ -204,14 +211,14 @@ if($redir2login)
 
 
   echo("<H2>RESULTS</H2>");
-  echo("<TABLE id='cs_table_result'>");
+  echo("<TABLE CLASS='table_result'>");
   echo("<TR>");
-  echo("<TH>Testsuite</TD>");
-  echo("<TH>Status</TD>");
-  echo("<TH>Test executed %</TD>");
+  echo("<TH CLASS='table_result_th'>Testsuite</TD>");
+  echo("<TH CLASS='table_result_th' COLSPAN=2>Status</TD>");
+  echo("<TH CLASS='table_result_th'>Executed %</TD>");
   if($_GET['show_coverage'])
   {
-    echo("<TH>Coverage %</TD>");
+    echo("<TH CLASS='table_result_th'>Coverage %</TD>");
   }
   echo("</TR>");
 
@@ -222,33 +229,68 @@ if($redir2login)
 
   foreach($table_results as &$testsuite)
   {
-    echo("<TR CLASS='hide_".$testsuite["level"]."'>");
-    echo("<TD>");
+
+    // pourcentage de passed ou failed
+    $percent_executed = (100 * ($testsuite["passed"] + $testsuite["failed"])) /
+      ($testsuite["notrun"] + $testsuite["passed"] + $testsuite["failed"] +
+      $testsuite["blocked"]);
+    $percent_executed = floor($percent_executed);
+
+    // les TR du tableau auront plusieurs class suivant différent critère ainsi 
+    // il est possible de les faire disparaitre facilement
+    $class_name = "";
+    // les sous testsuite
+    if( $testsuite["level"] >= 2 )
+    {
+      $class_name = $class_name." hide_level";
+    }
+    // cacher les testsuites executées à 100%
+    if($percent_executed == 100)
+    {
+      $class_name = $class_name." hide_complete";
+    }
+    // cacher les testsuites 100% passed
+    if( $testsuite["notrun"] + $testsuite["blocked"] + $testsuite["failed"] 
+      == 0) 
+    {
+      $class_name = $class_name." hide_passed";
+    }
+
+    // dans le javascript je peux ensuite utiliser ce class_name comme critère 
+    // pour cacher ou non une ligne
+    echo("<TR CLASS='".$class_name."'>");
+    echo("<TD CLASS='table_result_td'>");
     // créer des espaces en fonction du level
     echo(str_repeat("&nbsp;", $testsuite["level"] * 3));
     echo($testsuite["name"]);
     echo("</TD>");
-    echo("<TD>");
+    echo("<TD CLASS='table_result_td_status'>");
     echo(get_status_html_table(
       $testsuite["notrun"],
       $testsuite["passed"],
       $testsuite["failed"],
       $testsuite["blocked"]));
     echo("</TD>");
-    // pourcentage de passed ou failed
-    echo("<TD>");
-    $percent_executed = (100 * ($testsuite["passed"] + $testsuite["failed"])) /
-      ($testsuite["notrun"] + $testsuite["passed"] + $testsuite["failed"] +
-      $testsuite["blocked"]);
-    $percent_executed = round($percent_executed);
+    echo("<TD CLASS='table_result_td_status'>");
+    echo("<DIV><CANVAS ID='".$testsuite["id"]."' WIDTH='40' HEIGHT='40'>
+      </CANVAS></DIV>");
+    echo("<SCRIPT TYPE='text/javascript'>");
+    echo("draw_pie_chart(".$testsuite["id"].",
+      ".$testsuite["notrun"].",
+      ".$testsuite["passed"].",
+      ".$testsuite["failed"].",
+      ".$testsuite["blocked"].")");
+    echo("</SCRIPT>");
+    echo("</TD>");
+    echo("<TD CLASS='table_result_td'>");
     echo(get_percent_html_table($percent_executed));
     echo("</TD>");
     if($_GET['show_coverage'])
     {
-      echo("<TD>");
+      echo("<TD CLASS='table_result_td'>");
       $percent_coverage = (100 * ($testsuite["notrun"] + $testsuite["passed"] +
         $testsuite["failed"] + $testsuite["blocked"])) / $testsuite["total"];
-      $percent_coverage = round($percent_coverage);
+      $percent_coverage = floor($percent_coverage);
       echo(get_percent_html_table($percent_coverage));
       echo("</TD>");
     }
@@ -256,30 +298,41 @@ if($redir2login)
   }
   unset($testsuite);
   echo("<TR>");
-  echo("<TH>Total</TH>");
-  echo("<TD>");
+  echo("<TH CLASS='table_result_th'>Total</TH>");
+  echo("<TD CLASS='table_result_td_status'>");
   echo(get_status_html_table(
     $stats_table["notrun"],
     $stats_table["passed"],
     $stats_table["failed"],
     $stats_table["blocked"]));
   echo("</TD>");
-  echo("<TD>");
+  echo("<TD CLASS='table_result_td_status'>");
+  echo("<DIV><CANVAS ID='total_id' WIDTH='40' HEIGHT='40'>
+    </CANVAS></DIV>");
+  echo("<SCRIPT TYPE='text/javascript'>");
+  echo("draw_pie_chart('total_id',"
+    .$stats_table["notrun"].","
+    .$stats_table["passed"].","
+    .$stats_table["failed"].","
+    .$stats_table["blocked"].")");
+  echo("</SCRIPT>");
+  echo("</TD>");
+  echo("<TD CLASS='table_result_td'>");
   $percent_executed = (100 * ($stats_table['passed'] +
     $stats_table['failed']) ) /
     ( $stats_table['notrun'] +
     $stats_table['passed'] +
     $stats_table['failed'] +
     $stats_table['blocked']);
-  $percent_executed = round($percent_executed);
+  $percent_executed = floor($percent_executed);
   echo(get_percent_html_table($percent_executed));
   echo("</TD>");
   if($_GET['show_coverage'])
   {
-    echo("<TD>");
+    echo("<TD CLASS='table_result_td'>");
     $percent_coverage = (100 * ($stats_table["notrun"] + $stats_table["passed"] +
       $stats_table["failed"] + $stats_table["blocked"])) / $stats_table["total"];
-    $percent_coverage = round($percent_coverage);
+    $percent_coverage = floor($percent_coverage);
     echo(get_percent_html_table($percent_coverage));
     echo("</TD>");
   }
@@ -287,7 +340,8 @@ if($redir2login)
   echo("</TABLE>");
 
 
-  if($_GET['hide_ts'] == "on")
+  // cacher les testsuites de bas niveau si la case est cochée
+  if($_GET['hd_low_ts'] == "on")
   {
     echo("<SCRIPT>toggle_testsuite(2,".$tree_level_max.")</SCRIPT>");
   }

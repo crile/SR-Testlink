@@ -3,9 +3,11 @@
 
 
 
-  // @brief   fonctions liées à la base de donnée
-  // @author  Cyril SANTUNE
-  // @version 9 (2015-10-16): ajout de $tree_level_max
+  // @brief  fonctions liées à la base de donnée
+  // @author Cyril SANTUNE
+  // @date   2015-10-16: ajout de $tree_level_max
+  // @date   2015-10-18: ajout de commentaire, initialisation de variable pour 
+  //         éviter les érreurs
 
 
 
@@ -20,10 +22,10 @@
 
 
 
-  // @brief  fournir l'id, le nom, le parent etc d'un testsuite en fonction de son id
-  //         rempli également le variable global $table_results
+  // @brief  fournir l'id, le nom, le parent etc d'un testsuite en fonction de
+  //         son id et remplit la variable global $table_results
   // @return un tableau avec les infos du testsuite
-  function add_or_get_testsuite_info($testsuite_id)
+  function add_testsuite_info_to_table_results($testsuite_id)
   {
     $db_table_node_types = $GLOBALS['db_table_node_types']; 
     $table_results = $GLOBALS['table_results']; 
@@ -59,7 +61,7 @@
         else
         {
           $parent_id = $output["parent_id"];
-          add_or_get_testsuite_info($parent_id);
+          add_testsuite_info_to_table_results($parent_id);
           // la variable global a pu changer
           $table_results = $GLOBALS['table_results']; 
           $output["level"] = $table_results[$parent_id]["level"] + 1;
@@ -203,7 +205,8 @@
   // @brief créer le tableau $table_results et $stats_table
   //        sauver aussi le niveau max comme variable global $tree_level_max
   // @param array_build_id est une liste d'id de builds
-  function generate_result_table($testproject_id, $testplan_id, $array_build_id, $show_coverage)
+  function generate_result_table($testproject_id, $testplan_id, $array_build_id,
+    $show_coverage)
   {
     $db_table_node_types = $GLOBALS['db_table_node_types'];
     // pour les totaux
@@ -242,7 +245,8 @@
       AND E.tcversion_id = TP.tcversion_id
       AND E.build_id IN (".$list_build_id.")
       GROUP BY tcversion_id) OR execution_id IS NULL)";
-    $where_clause_2_build = " AND TP.build_id IN (".$list_build_id.")".$where_clause_2_build;
+    $where_clause_2_build = " AND TP.build_id IN (".$list_build_id.")".
+			$where_clause_2_build;
 
 
     $group_by = " GROUP BY status";
@@ -255,12 +259,19 @@
       $testsuite_id = $testsuite["id"];
       $where_clause_3 = " AND testsuite_id = ".$testsuite_id;
 
-      $sql = $select.$from.$where_clause_1.$where_clause_2.$where_clause_3.$group_by;
+      $sql = $select.$from.$where_clause_1.$where_clause_2.$where_clause_3.
+				$group_by;
       if($array_build_id != null)
       {
-        $sql = $select.$from.$where_clause_1.$where_clause_2_build.$where_clause_3.$group_by;
+        $sql = $select.$from.$where_clause_1.$where_clause_2_build.
+	  			$where_clause_3.$group_by;
       }
 
+
+      // initialiser les variables
+      $table_results[$testsuite_id]["passed"] = 0;
+      $table_results[$testsuite_id]["failed"] = 0;
+      $table_results[$testsuite_id]["blocked"] = 0;
       $request = cs_database_query($sql);
       while( $result = cs_database_fetch_object($request) )
       {
@@ -305,19 +316,23 @@
     // calcul pour le couverture de tests
     if($show_coverage == "on")
     {
-      $testcase_number_by_testsuite = get_testcase_number_by_testsuite($testproject_id);
+      $testcase_number_by_testsuite = 
+        get_testcase_number_by_testsuite($testproject_id);
       foreach($table_results as &$testsuite)
       {
-        $testsuite["total"] = $testcase_number_by_testsuite[$testsuite["id"]]["testcase_number"];
+        $testsuite["total"] = 
+          $testcase_number_by_testsuite[$testsuite["id"]]["testcase_number"];
       }
+      unset($testsuite);
       // pour le total (nombre de testcase du project)
-      $stats_table["total"] = $testcase_number_by_testsuite[$testproject_id]["testcase_number"];
+      $stats_table["total"] = 
+        $testcase_number_by_testsuite[$testproject_id]["testcase_number"];
     }
 
 
 
     // pour l'instant, si C a 2 testcases et D a 2 testcases,
-    // mais qui C est inclus dans D, alors le nombre de testcases
+    // mais que C est inclus dans D, alors le nombre de testcases
     // est faux pour D. D = 2 + 2 = 4
     // Pour résoudre ce problème, il faut prendre les testsuites
     // les plus profond de l'arbre et remonter vers la racine 
@@ -390,7 +405,7 @@
     $request = cs_database_query($sql);
     while( $result = cs_database_fetch_object($request) )
     {
-      add_or_get_testsuite_info($result->id);
+      add_testsuite_info_to_table_results($result->id);
     }
   }
 
@@ -467,9 +482,9 @@
     $db_table_node_types = $GLOBALS['db_table_node_types'];
     $level = 0;
     
-    // créer une liste d'id de testsuite compris dans ce projet
+    // liste de project/testsuite avec leur nombre de testcases
     $testsuite_list = array();
-    // nombre de testcases
+    // nombre de testcases pour l'id courant
     $sql = "SELECT COUNT(TC.id) as number
       FROM nodes_hierarchy TC
       WHERE node_type_id = ".$db_table_node_types['testcase']."
@@ -485,27 +500,29 @@
       WHERE node_type_id = ".$db_table_node_types['testsuite']."
       AND parent_id = ".$id;
     $request = cs_database_query($sql);
+    // pour tous les enfants, appeler la même fonction
     while( $result = cs_database_fetch_object($request) )
     {
       $children = get_testcase_number_by_testsuite($result->id);
-      // copie du résultat dans le tableau courant
+      // concaténer le résultat dans le tableau courant
       // et ajout au parent
       while( $child = array_shift($children) )
       {
         $testsuite_list[$child["id"]] = $child;
-        // compute permet de savoir si ce fils à déjà été ajouté dans un noeud
-        if($child["compute"] == "yes")
+        // to_compute permet de savoir si ce fils à déjà
+        // été ajouté dans un noeud. Il ne faut pas ajouté le nombre de test de
+        // mon petit fils s'ils sont compris dans mon fils.
+        if($child["to_compute"] == "yes")
         {
-          $testsuite_list[$child["id"]]["compute"] = "no";
+          $testsuite_list[$child["id"]]["to_compute"] = "no";
           $testsuite_list[$id]["testcase_number"] = 
             $testsuite_list[$id]["testcase_number"] + $child["testcase_number"];
         }
       }
     }
 
-
     // je viens d'être calculer mon parent peut m'ajouter dans sa somme
-    $testsuite_list[$id]["compute"] = "yes";
+    $testsuite_list[$id]["to_compute"] = "yes";
     return $testsuite_list;
   }
 

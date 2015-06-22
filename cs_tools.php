@@ -3,9 +3,10 @@
 
 
 
-  // @brief   fonction diverses
-  // @author  Cyril SANTUNE
-  // @version 9 (2015-10-16): modification liée au feuille de style
+  // @brief  fonction diverses
+  // @author Cyril SANTUNE
+  // @date   2015-10-16: modification liée au feuille de style
+  // @date   2015-10-19: modification liée au feuille de style
 
 
 
@@ -47,15 +48,14 @@
         }
         else
         {
+          $table_results = $GLOBALS['table_results']; 
           // le niveau est supérieur comparer avec le père
           if($a["level"] < $b["level"])
           {
-            $table_results = $GLOBALS['table_results']; 
             $flag_swap = compare_testsuite($a, $table_results[$b["parent_id"]]);
           }
           else
           {
-            $table_results = $GLOBALS['table_results']; 
             $flag_swap = compare_testsuite($table_results[$a["parent_id"]], $b);
           }
         }
@@ -103,18 +103,18 @@
       $blocked = 0;
     }
 
-    $output = $output."<TABLE style='margin:2; border:0; padding:2; border-spacing:0;'>";
+    $output = $output."<TABLE CLASS='css_status_table'>";
     $output = $output."  <TR>";
-    $output = $output."    <TD style='padding:2; border:none; background:".$not_run_color."'>";
+    $output = $output."    <TD STYLE='background:".$not_run_color."'>";
     $output = $output.$not_run;
     $output = $output."    </TD>";
-    $output = $output."    <TD style='padding:2; border:none; background:".$passed_color."'>";
+    $output = $output."    <TD STYLE='background:".$passed_color."'>";
     $output = $output.$passed;
     $output = $output."    </TD>";
-    $output = $output."    <TD style='padding:2; border:none; background:".$failed_color."'>";
+    $output = $output."    <TD STYLE='background:".$failed_color."'>";
     $output = $output.$failed;
     $output = $output."    </TD>";
-    $output = $output."    <TD style='padding:2; border:none; background:".$blocked_color."'>";
+    $output = $output."    <TD STYLE='background:".$blocked_color."'>";
     $output = $output.$blocked;
     $output = $output."    </TD>";
     $output = $output."  </TR>";
@@ -122,7 +122,6 @@
 
     return $output;
   }
-
 
 
 
@@ -134,23 +133,23 @@
     $percent_color = '#00FF00';
     $empty_color = '#FF0000';
 
-    $output = "<TABLE style='margin:2; border:0; padding:2; border-spacing:0;'>";
+    $output = "<TABLE CLASS='percent_table'>";
     $output = $output."<TR>";
     $i = 1;
     while($i <= ($percent / 10))
     {
-      $output = $output."<TD style='border:0; padding:2; background:".$percent_color.";'>";
+      $output = $output."<TD style='background:".$percent_color.";'>";
       $output = $output." </TD>";
       $i = $i + 1;
     }
     while($i <= 10)
     {
-      $output = $output."<TD style='border:0; padding:2; background:".$empty_color.";'>";
+      $output = $output."<TD style='background:".$empty_color.";'>";
       $output = $output." </TD>";
       $i = $i + 1;
     }
 
-    $output = $output."<TD style='border:0; padding:2;'>";
+    $output = $output."<TD>";
     $output = $output.$percent."%";
     $output = $output."</TD>";
     $output = $output."</TR>";
