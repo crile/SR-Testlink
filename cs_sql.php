@@ -5,8 +5,8 @@
 
   // @brief  fonctions liées à la base de donnée
   // @author Cyril SANTUNE
-  // @date   2015-10-16: ajout de $tree_level_max
-  // @date   2015-10-18: ajout de commentaire, initialisation de variable pour 
+  // @date   2015-06-16: ajout de $tree_level_max
+  // @date   2015-06-18: ajout de commentaire, initialisation de variable pour 
   //         éviter les érreurs
 
 

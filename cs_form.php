@@ -31,14 +31,16 @@
   // pour tous les projets
   foreach($db_table_projects as &$project)
   {
-    // aprÃ¨s avoir recharger le page, placer la liste sur la bonne option
+    // après avoir recharger le page, placer la liste sur la bonne option
     if($project["id"] == $_GET['pj_id'])
     {
-      echo("<OPTION SELECTED VALUE='".$project["id"]."'>".$project["name"]."</OPTION>\n");
+      // utf8_decode remplace le utf8 en ISO-8859-1 pour l'affiche dans le browser
+      // problème avec le caractère numéro 
+      echo("<OPTION SELECTED VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
     }
     else
     {
-      echo("<OPTION VALUE='".$project["id"]."'>".$project["name"]."</OPTION>\n");
+      echo("<OPTION VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
     }
   }
   echo("</SELECT>\n");
@@ -48,22 +50,21 @@
 
   // pour les testplans
 
-  echo("testplan :
-    <SELECT ID='tp_id' NAME='tp_id' ACTION='#' 
-    ONCHANGE='reload(\"tp_id\",\"pj_id=".$_GET['pj_id']."\")'>
-    <OPTION VALUE=''></OPTION>");
+  echo("testplan : <SELECT ID='tp_id' NAME='tp_id' ACTION='#' >");
+    //ONCHANGE='reload(\"tp_id\",\"pj_id=".$_GET['pj_id']."\")'>
+  echo("<OPTION VALUE=''></OPTION>");
   // pour tous les testplans
   $db_table_testplans = get_table_testplans($_GET['pj_id']);
   foreach($db_table_testplans as &$testplan)
   {
-    // aprÃ¨s avoir recharger le page, placer la liste sur la bonne option
+    // après avoir recharger le page, placer la liste sur la bonne option
     if($testplan["id"] == $_GET['tp_id'])
     {
-      echo "<OPTION SELECTED VALUE='".$testplan["id"]."'>".$testplan["name"]."</OPTION>\n";
+      echo "<OPTION SELECTED VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
     }
     else
     {
-      echo "<OPTION VALUE='".$testplan["id"]."'>".$testplan["name"]."</OPTION>\n";
+      echo "<OPTION VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
     }
   }
   echo("</SELECT>\n");
@@ -76,20 +77,14 @@
   if( $_GET['tp_id'] )
   {
 
+
+
     // pour les builds
+    // plutot qu'un select multiple faire plusieurs checkbox
     echo("<BR><FIELDSET>");
     echo("<LEGEND>Build</LEGEND>");
-    // plutot qu'un select multiple faire plusieurs checkbox
+	// recuperer la liste de build pour ce testplan
     $db_table_builds = get_table_builds($_GET['tp_id']);
-    // reconstruire un tableau d'après la liste de builds selectionnées 
-    // ainsi la comparaison sera plus facile dans la boucle pour vérifier
-    // "checked"
-    $build_id_selected = array();
-    $tmp = $_GET["bd_id"];
-    foreach($tmp as &$id)
-    {
-      $build_id_selected[$id] = $id;
-    }
 
     // pour toutes les builds
     // pour la présentation sauter une ligne toutes les 4 builds
@@ -100,7 +95,9 @@
       $input = $input."<TD>";
       $input = $input."<INPUT TYPE='checkbox' NAME='bd_id[]'";
       // vérifier si la build est selectionnée
-      if($build_id_selected[$build["id"]])
+	  // le tableau dans l'url "bd_id" contient les builds selectionnées
+	  // in_array permet de verifier si une valeur existe dans un tableau
+      if(in_array($build["id"], $_GET["bd_id"]))
       {
         $input = $input." CHECKED";
       }
@@ -118,6 +115,7 @@
     $input = $input."</TR></TABLE>";
     echo($input);
     echo("</FIELDSET>");
+
 
 
 
@@ -141,8 +139,6 @@
 
 
 
-    // le bouton submit/OK
-    echo("<BR><INPUT NAME='submit' TYPE='submit' value=' OK '/><BR>\n");
 
 
 
@@ -150,14 +146,19 @@
     // display
    
     // cacher les sous testsuites
-    echo("<BR><BR><FIELDSET>");
+    echo("<BR><FIELDSET>");
     echo("<LEGEND>Display</LEGEND>");
     echo("hide:
       <UL CLASS='css_ul_form'>
-      <LI>low level testsuite:
-        <INPUT TYPE='checkbox' ID='checkbox_hide_level' 
-        ONCLICK='toggle_testsuite()'></INPUT>
-      </LI>");
+      <LI>low level testsuite:");
+    $input = "<INPUT TYPE='checkbox' ID='checkbox_hide_level' NAME='checkbox_hide_level'";
+	if($_GET['checkbox_hide_level'] == "on")
+	{
+	  $input = $input." CHECKED";
+	}
+	$input = $input." ONCLICK='toggle_testsuite()'></INPUT>";
+    echo($input);
+    echo("  </LI>");
     // cacher les testsuites à 100%
     echo("
       <LI>complete testsuite (100% executed): 
@@ -178,10 +179,14 @@
   }
 
 
-
+  // le bouton submit/OK
+  // CLASS='button' pour définir le style du bouton
+  echo("<BR><INPUT CLASS='button' NAME='submit' TYPE='submit' value=' OK '/>\n");
+  // CLASS='button' ainsi mon lien ressemble a un bouton pas besoin de faire du
+  // javascript et de input pour avoir le lien
+  echo("<A CLASS='button' HREF='cs_stats.php?session_reset=yes'> Reset </A>");
 
   echo("</FORM>\n");
-
 
 
 

@@ -3,101 +3,24 @@
 
 
 
-  // @brief  page principale, le début est extrait de la page index.php de 
-  //         testlink
+  // @brief  page principale
   // @author Cyril SANTUNE
-  // @date   2015-10-16: changement du texte pour le contact de l'administrateur
-  // @date   2015-10-18: ajout de graphique camembert
-  // @date   2015-10-19: remplacement de la fonction round pour les moyennes
+  // @date   2015-06-16: changement du texte pour le contact de l'administrateur
+  // @date   2015-06-18: ajout de graphique camembert
+  // @date   2015-06-19: remplacement de la fonction round pour les moyennes
   //         puisque round peut faire un arrondie superieur donc par exemple
   //         obtenir 100% alors que tous les tests ne sont pas passés.
   //         Ajout de class name sur les TRs du tableau résultat pour un 
   //         filtrage futur (dans le javascript)
+  // @date   2015-09-30: rendre la page accessible sans login
+  // @date   2015-10-01: suppression de la ligne *total* du tableau
 
 
 
 
-  // afficher les erreurs
+  // afficher les erreurs php
   ini_set('display_errors','On');
   error_reporting(E_ALL);
-
-
-
-
-function initEnv()
-{
-  $iParams = array("reqURI" => array(tlInputParameter::STRING_N,0,4000));
-  $pParams = G_PARAMS($iParams);
-  
-  $args = new stdClass();
-  $args->reqURI = ($pParams["reqURI"] != '') ? $pParams["reqURI"] : 'lib/general/mainPage.php';
-  $args->tproject_id = isset($_REQUEST['tproject_id']) ? intval($_REQUEST['tproject_id']) : 0;
-  $args->tplan_id = isset($_REQUEST['tplan_id']) ? intval($_REQUEST['tplan_id']) : 0;
-
-  $gui = new stdClass();
-  $gui->title = lang_get('main_page_title');
-  $gui->titleframe = "lib/general/navBar.php?tproject_id={$args->tproject_id}&tplan_id={$args->tplan_id}" .
-                     "&updateMainPage=1";
-  $gui->mainframe = $args->reqURI;
-
-  return array($args,$gui);
-}
-
-
-require_once('lib/functions/configCheck.php');
-checkConfiguration();
-require_once('config.inc.php');
-require_once('common.php');
-doSessionStart();
-
-unset($_SESSION['basehref']);  // will be very interesting understand why we do this
-setPaths();
-list($args,$gui) = initEnv();
-
-// verify the session during a work
-$redir2login = true;
-if( isset($_SESSION['currentUser']) )
-{
-  // Session exists we need to do other checks.
-  //
-  // we use/copy Mantist approach
-  $securityCookie = tlUser::auth_get_current_user_cookie();
-  $redir2login = is_null($securityCookie);
-
-  if(!$redir2login)
-  {
-    // need to get fresh info from db, before asking for securityCookie
-    doDBConnect($db,database::ONERROREXIT);
-    $user = new tlUser();
-    $user->dbID = $_SESSION['currentUser']->dbID;
-    $user->readFromDB($db);
-    $dbSecurityCookie = $user->getSecurityCookie();
-    $redir2login = ( $securityCookie != $dbSecurityCookie );
-  } 
-}
-
-if($redir2login)
-{
-  // destroy user in session as security measure
-  unset($_SESSION['currentUser']);
-
-  // If session does not exists I think is better in order to
-  // manage other type of authentication method/schemas
-  // to understand that this is a sort of FIRST Access.
-  //
-  // When TL undertand that session exists but has expired
-  // is OK to call login with expired indication, but is not this case
-  //
-  // Dev Notes:
-  // may be we are going to login.php and it will call us again!
-  redirect(TL_BASE_HREF ."login.php");
-  exit;
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -109,14 +32,59 @@ if($redir2login)
 
 
 
+  // ====== code extrait de index.php pour la connexion à la base ======
+  //
+  function initEnv()
+  {
+	$iParams = array("reqURI" => array(tlInputParameter::STRING_N,0,4000));
+	$pParams = G_PARAMS($iParams);
+
+	$args = new stdClass();
+	$args->reqURI = ($pParams["reqURI"] != '') ? $pParams["reqURI"] : 'lib/general/mainPage.php';
+	$args->tproject_id = isset($_REQUEST['tproject_id']) ? intval($_REQUEST['tproject_id']) : 0;
+	$args->tplan_id = isset($_REQUEST['tplan_id']) ? intval($_REQUEST['tplan_id']) : 0;
+
+	$gui = new stdClass();
+	$gui->title = lang_get('main_page_title');
+	$gui->titleframe = "lib/general/navBar.php?tproject_id={$args->tproject_id}&tplan_id={$args->tplan_id}" .
+					   "&updateMainPage=1";
+	$gui->mainframe = $args->reqURI;
+
+	return array($args,$gui);
+  }
+
+
+  require_once('lib/functions/configCheck.php');
+  checkConfiguration();
+  require_once('config.inc.php');
+  require_once('common.php');
+  doSessionStart();
+
+  unset($_SESSION['basehref']);  // will be very interesting understand why we do this
+  setPaths();
+  list($args,$gui) = initEnv();
+
+  doDBConnect($db,database::ONERROREXIT);
+  $user = new tlUser();
+  $user->dbID = $_SESSION['currentUser']->dbID;
+  $user->readFromDB($db);
+  $dbSecurityCookie = $user->getSecurityCookie();
+  $redir2login = ( $securityCookie != $dbSecurityCookie );
+
+  // ====== fin du code testlink ======
+
+
+
+
+
   // Gestion de la session php
   
   // créer un session php
   // inutile déjà fait dans le code testlink
-  //session_start();
+  // session_start();
 
   // detruction des variables session
-  if($_GET["session_reset"] == "yes")
+  if(isset($_GET["session_reset"]))
   {
     // session destroy est trop "violent" (logout de testlink)
     //session_destroy();
@@ -191,15 +159,22 @@ if($redir2login)
 
   echo("<HTML>\n");
   echo("  <HEAD>\n");
-  echo("    <TITLE>STATISTICS</TITLE>\n");
+  echo("    <TITLE>Statistics</TITLE>\n");
   echo("    <LINK REL='stylesheet' TYPE='text/css' HREF='cs_stats.css'/>");
   echo("  </HEAD>\n");
   echo("<BODY ONLOAD='disableselect();'>\n");
-  echo("<TABLE style='width:100%;'><TR><TD>");
-  echo("<A HREF='cs_stats.php?session_reset=yes'>Reset</A>\n");
-  echo("</TD><TD style='text-align:right'>");
-  echo("<A HREF='mailto:cyril.santune@gmail.com?Subject=testlink-cs_stats'>Contact administrator</A>");
-  echo("</TD></TR></TABLE>");
+  echo("<TABLE style='width:100%'>
+      <TR>
+        <TD style='width:80%'>
+        </TD>
+        <TD style='text-align:right'>
+          <A STYLE='font-size:12px' HREF='cs_changelog.html'>Version 2.0</A>
+        </TD>
+        <TD style='text-align:right'>
+          <A STYLE='font-size:12px' HREF='mailto:cyril.santune@gmail.com?Subject=testlink-cs_stats'>Contact administrator</A>
+        </TD>
+      </TR>
+    </TABLE>");
 
 
 
@@ -297,54 +272,19 @@ if($redir2login)
     echo("</TR>");
   }
   unset($testsuite);
-  echo("<TR>");
-  echo("<TH CLASS='table_result_th'>Total</TH>");
-  echo("<TD CLASS='table_result_td_status'>");
-  echo(get_status_html_table(
-    $stats_table["notrun"],
-    $stats_table["passed"],
-    $stats_table["failed"],
-    $stats_table["blocked"]));
-  echo("</TD>");
-  echo("<TD CLASS='table_result_td_status'>");
-  echo("<DIV><CANVAS ID='total_id' WIDTH='40' HEIGHT='40'>
-    </CANVAS></DIV>");
-  echo("<SCRIPT TYPE='text/javascript'>");
-  echo("draw_pie_chart('total_id',"
-    .$stats_table["notrun"].","
-    .$stats_table["passed"].","
-    .$stats_table["failed"].","
-    .$stats_table["blocked"].")");
-  echo("</SCRIPT>");
-  echo("</TD>");
-  echo("<TD CLASS='table_result_td'>");
-  $percent_executed = (100 * ($stats_table['passed'] +
-    $stats_table['failed']) ) /
-    ( $stats_table['notrun'] +
-    $stats_table['passed'] +
-    $stats_table['failed'] +
-    $stats_table['blocked']);
-  $percent_executed = floor($percent_executed);
-  echo(get_percent_html_table($percent_executed));
-  echo("</TD>");
-  if($_GET['show_coverage'])
-  {
-    echo("<TD CLASS='table_result_td'>");
-    $percent_coverage = (100 * ($stats_table["notrun"] + $stats_table["passed"] +
-      $stats_table["failed"] + $stats_table["blocked"])) / $stats_table["total"];
-    $percent_coverage = floor($percent_coverage);
-    echo(get_percent_html_table($percent_coverage));
-    echo("</TD>");
-  }
-  echo("</TR>");
   echo("</TABLE>");
 
 
   // cacher les testsuites de bas niveau si la case est cochée
-  if($_GET['hd_low_ts'] == "on")
+  // impossible de le faire avant puisque l'id n'existe pas encore
+  if($_GET['checkbox_hide_level'] == "on")
   {
-    echo("<SCRIPT>toggle_testsuite(2,".$tree_level_max.")</SCRIPT>");
+    // forcer l'appel de la fonction javascript pour cacher les testsuites de petit level
+    echo("<SCRIPT TYPE='text/javascript'>");
+    echo("toggle_testsuite();");
+    echo("</SCRIPT>");
   }
+
 
   echo("</BODY>\n");
   echo("</HTML>\n");
