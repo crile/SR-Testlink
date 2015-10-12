@@ -168,7 +168,7 @@
         <TD style='width:80%'>
         </TD>
         <TD style='text-align:right'>
-          <A STYLE='font-size:12px' HREF='cs_changelog.html'>Version 2.0</A>
+          <A STYLE='font-size:12px' HREF='cs_changelog.html'>Version 2.1</A>
         </TD>
         <TD style='text-align:right'>
           <A STYLE='font-size:12px' HREF='mailto:cyril.santune@gmail.com?Subject=testlink-cs_stats'>Contact administrator</A>
@@ -185,7 +185,6 @@
 
 
 
-  echo("<H2>RESULTS</H2>");
   echo("<TABLE CLASS='table_result'>");
   echo("<TR>");
   echo("<TH CLASS='table_result_th'>Testsuite</TD>");

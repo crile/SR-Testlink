@@ -4,10 +4,12 @@
 
 /* @brief  feuille de style
    @author Cyril SANTUNE
-   @date   2015-10-16: création
-   @date   2015-10-18: réindentation et mise à jour pour la colonne status du
+   @date   2015-06-16: création
+   @date   2015-06-18: réindentation et mise à jour pour la colonne status du
            tableau résultat
-   @date   2015-10-19: ajout d'un item pour les listes ul
+   @date   2015-06-19: ajout d'un item pour les listes ul
+   @date   2015-10-08(Cyril SANTUNE): ajout d'une partie css pour la page changelog
+   @date   2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
 */
 
 
@@ -34,12 +36,20 @@ span, div
   margin:        0px;
   padding:       0px;
 }
-
-h2
+table td
 {
-  text-align:    center;
-  color:         #15428b;
+  border-collapse: collapse;
+  border:          none;
+  border-spacing:  0;
+  margin:          0;
+  padding:         0;
 }
+
+
+
+
+
+/* form */
 
 form
 {
@@ -51,7 +61,7 @@ form
   border-style:  groove;
   border-width:  thin;
   background:    #EEE;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   margin-right:  0px;
   border:        none;
 }
@@ -75,91 +85,31 @@ form fieldset legend
   line-height:  15px;
 }
 
-.css_ul_form
+#cs_form ul
 {
   padding-left: 15px;
 }
 
-/* pour les tableaux dans le formulaire */
-.css_form_table
+#cs_form table
 {
-  font:          100% 'Trebuchet MS';
-  border:        none;
   background:    #EEE; 
-}
-
-
-
-table td
-{
-  border-collapse: collapse;
-  border:          none;
-  border-spacing:  0;
+  border:        none;
+  font:          100% 'Trebuchet MS';
   margin:          0;
-  padding:         0;
+  width:           100%;
 }
 
-/* le tableau utilisé pour afficher passed, failed, etc 
-   ou les pourcentages */
-.css_status_table, .percent_table
+/* pour un tableau imbriqué dans un fieldset */ 
+#cs_form fieldset table
 {
-  border:          none;
-  border-collapse: collapse;
-  margin:          0;
-  padding:         2;
+  border-spacing:  5px;
+  width: auto;
 }
-.css_status_table td
+.cs_form_table_legend_td
 {
-  padding:         4;
+  width:           10px;
 }
-.percent_table td
-{
-  padding:         3;
-}
-
-/* le tableau résultat */
-.table_result
-{
-  font:            100% 'Trebuchet MS';
-  color:           #000000;
-  margin:          auto;
-  border-collapse: collapse;
-  border-top:      1px solid #000000;
-  border-left:     1px solid #000000;
-  border-right:    1px solid #000000;
-  border-bottom:   1px solid #000000;
-  padding:         5px 10px 5px 10px;
-}
-.table_result_td
-{
-  border-top:      1px solid #000000;
-  border-left:     1px solid #000000;
-  border-right:    1px solid #000000;
-  border-bottom:   1px solid #000000;
-  padding:         0px 2px 0px 2px;
-}
-/* pour la colonne status dans le tableau de résultat */
-.table_result_td_status
-{
-  border-top:      1px solid #000000;
-  border-left:     1px solid #000000;
-  border-left:     none;
-  border-right:    none;
-  padding:         0px 2px 0px 2px;
-}
-.table_result_th
-{
-  font:          bold 100% 'Trebuchet MS';
-  border-top:    1px solid #000000;
-  border-left:   1px solid #000000;
-  border-right:  1px solid #000000;
-  border-bottom: 1px solid #000000;
-  padding:       5px 10px 5px 10px;
-}
-
-
-
-.button
+.cs_form_button
 {
   font: bold 11px 'Trebuchet MS';
   text-decoration: none;
@@ -171,3 +121,205 @@ table td
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
+
+
+
+
+
+
+/* tableau status */
+
+#cs_table_status table
+{
+  border-spacing:  0px;
+  font:            14px 'Trebuchet MS';
+  margin-bottom:   0px;
+  margin-left:     0px;
+  margin-right:    0px;
+  margin-top:      0px;
+}
+#cs_table_status td
+{
+  height:          30px;
+  /* ecart entre le contenu de la cellule et le bord */
+  padding-left:    5px;
+  padding-right:   5px;
+  text-align:      center;
+}
+/* couleur pour la table status et légende */
+.cs_table_status_not_run
+{
+  background:      #A1B5BA;
+}
+.cs_table_status_passed
+{
+  background:      #00FF00;
+}
+.cs_table_status_failed
+{
+  background:      #FF0000;
+}
+.cs_table_status_blocked
+{
+  background:      #1ACAF6;
+}
+.cs_font_status_not_run
+{
+  color:      #A1B5BA;
+}
+.cs_font_status_passed
+{
+  color:      #00FF00;
+}
+.cs_font_status_failed
+{
+  color:      #FF0000;
+}
+.cs_font_status_blocked
+{
+  color:      #1ACAF6;
+}
+
+
+
+
+
+
+/* tableau percent */
+
+#cs_table_percent
+{
+  font:            14px 'Trebuchet MS';
+  margin:          0px;
+  padding:         0px;
+}
+#cs_table_percent table
+{
+  border-spacing:  0px;
+  font:            inherit;
+  margin: auto;
+}
+#cs_table_percent td
+{
+  padding-bottom:  5px;
+  padding-left:    0px;
+  padding-right:   0px;
+  padding-top:     5px;
+  width:           8px;
+}
+.cs_table_percent_color_1
+{
+  background:      #00FF00;
+}
+.cs_table_percent_color_2
+{
+  background:      #FF0000;
+}
+
+
+
+
+
+/* tableau résultat */
+.table_result
+{
+  font:            100% 'Trebuchet MS';
+  color:           #000000;
+  margin:          auto;
+  border-collapse: collapse;
+  border-top:      1px solid #99BBE8;
+  border-left:     1px solid #99BBE8;
+  border-right:    1px solid #99BBE8;
+  border-bottom:   1px solid #99BBE8;
+  padding:         5px 10px 5px 10px;
+}
+.table_result_td
+{
+  border-top:      1px solid #99BBE8;
+  border-left:     1px solid #99BBE8;
+  border-right:    1px solid #99BBE8;
+  border-bottom:   1px solid #99BBE8;
+  padding:         0px 2px 0px 2px;
+}
+/* pour la colonne status dans le tableau de résultat */
+.table_result_td_status
+{
+  border-left:     none;
+  border-right:    none;
+  border-top:      1px solid #99BBE8;
+  border-bottom:   1px solid #99BBE8;
+  padding-right:   5px;
+  padding-left:    5px;
+}
+.table_result_th
+{
+  border-top:      1px solid #99BBE8;
+  border-left:     1px solid #99BBE8;
+  border-right:    1px solid #99BBE8;
+  border-bottom:   1px solid #99BBE8;
+  font:          bold 100% 'Trebuchet MS';
+  color:         #15428B;
+  padding:       5px 10px 5px 10px;
+}
+
+
+
+
+
+
+
+/* la page changelog */
+
+/* # pour définir un id et non une class */
+/* en html <body id='changelog'> */
+#changelog
+{
+  background:    #EEE; 
+  font-family:   'Trebuchet MS', Arial;
+  font-size:     14px;
+  margin:        20px;
+  width:         600px;
+}
+#changelog_header
+{
+  margin-top:    20px;
+  padding:       5px;
+  border:        3px solid #99BBE8;
+}
+/* en html faire un div au départ, exemple
+ * <DIV id='changelog_header'><H1>blabla</H1>
+ * H1 ici correspond bien à H1 id='changelog_header' */
+#changelog_header h1
+{
+  border-bottom: 3px double #15428b;
+  font-size:     16px;
+  margin-top:     5px;
+  padding-bottom: 5px;
+}
+#changelog_header li
+{
+  margin-left:10px;
+}
+#changelog h3
+{
+  font-size:      14px;
+  margin-bottom:  0px;
+  margin-left:    5px;
+  margin-top:     5px;
+  text-transform: capitalize;
+}
+#changelog li
+{
+  list-style-type: circle;
+  margin-left:     20px;
+}
+#changelog_footer
+{
+  padding:         15px;
+  padding-top:     20px;
+  text-align:      center;
+}
+
+
+
+

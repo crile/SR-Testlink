@@ -5,8 +5,10 @@
 
   // @brief  fonction diverses
   // @author Cyril SANTUNE
-  // @date   2015-10-16: modification liée au feuille de style
-  // @date   2015-10-19: modification liée au feuille de style
+  // @date   2015-06-16: modification liée au feuille de style
+  // @date   2015-06-19: modification liée au feuille de style
+  // @date   2015-10-08(Cyril SANTUNE): réécriture de la fonction 
+  //         get_percent_html_table() et utilisation du fichier css
 
 
 
@@ -76,14 +78,9 @@
 
 
 
-
   // @brief créer un tableau html avec des couleurs pour les différents status
   function get_status_html_table($not_run, $passed, $failed, $blocked)
   {
-    $not_run_color = '#A1B5BA';
-    $passed_color = '#00FF00';
-    $failed_color = '#FF0000';
-    $blocked_color = '#1ACAF6';
     $output = "";
 
     if($not_run == "")
@@ -103,25 +100,17 @@
       $blocked = 0;
     }
 
-    $output = $output."<TABLE CLASS='css_status_table'>";
-    $output = $output."  <TR>";
-    $output = $output."    <TD STYLE='background:".$not_run_color."'>";
-    $output = $output.$not_run;
-    $output = $output."    </TD>";
-    $output = $output."    <TD STYLE='background:".$passed_color."'>";
-    $output = $output.$passed;
-    $output = $output."    </TD>";
-    $output = $output."    <TD STYLE='background:".$failed_color."'>";
-    $output = $output.$failed;
-    $output = $output."    </TD>";
-    $output = $output."    <TD STYLE='background:".$blocked_color."'>";
-    $output = $output.$blocked;
-    $output = $output."    </TD>";
-    $output = $output."  </TR>";
-    $output = $output."</TABLE>";
+    $output = $output."<DIV id='cs_table_status'><TABLE><TR>";
+    $output = $output."<TD CLASS='cs_table_status_not_run'>".$not_run."</TD>";
+    $output = $output."<TD CLASS='cs_table_status_passed'>".$passed."</TD>";
+    $output = $output."<TD CLASS='cs_table_status_failed'>".$failed."</TD>";
+    $output = $output."<TD CLASS='cs_table_status_blocked'>".$blocked."</TD>";
+    $output = $output."</TR></TABLE></DIV>";
 
     return $output;
   }
+
+
 
 
 
@@ -130,30 +119,49 @@
   // @return une chaine contenant un tableau
   function get_percent_html_table($percent)
   {
-    $percent_color = '#00FF00';
-    $empty_color = '#FF0000';
+    // pour afficher le pourcentage, je dois afficher un caractère par cellule
+    // du tableau donc je commence par spliter la chaine en tableau
+    $percent_array = str_split($percent);
+    // ajouter le symbole %
+    array_push($percent_array, '%');
 
-    $output = "<TABLE CLASS='percent_table'>";
-    $output = $output."<TR>";
+    $output = "<DIV id='cs_table_percent'><TABLE><TR>";
     $i = 1;
-    while($i <= ($percent / 10))
-    {
-      $output = $output."<TD style='background:".$percent_color.";'>";
-      $output = $output." </TD>";
-      $i = $i + 1;
-    }
+    $j = 0;
     while($i <= 10)
     {
-      $output = $output."<TD style='background:".$empty_color.";'>";
-      $output = $output." </TD>";
+
+      // mettre la bonne couleur sur la case
+      if($i <= ($percent / 10))
+      {
+        $output = $output."<TD CLASS='cs_table_percent_color_1'>";
+      }
+      else
+      {
+        $output = $output."<TD CLASS='cs_table_percent_color_2'>";
+      }
+
+      // afficher le pourcentage en lettre a peu pres au milieu
+      if($i >= 4)
+      {
+        // prendre les caractères un par un jusqu'a la fin du tableau
+        if($j < count($percent_array))
+        {
+          $tmp_string = $percent_array[$j];
+        }
+        else
+        {
+          $tmp_string = "";
+        }
+        $j = $j + 1;
+      }
+
+      $output = $output.$tmp_string;
+      $output = $output."</TD>";
       $i = $i + 1;
     }
 
-    $output = $output."<TD>";
-    $output = $output.$percent."%";
-    $output = $output."</TD>";
-    $output = $output."</TR>";
-    $output = $output."</TABLE>";
+    $output = $output."</TR></TABLE></DIV>";
     return $output;
   }
 
