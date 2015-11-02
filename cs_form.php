@@ -33,17 +33,19 @@
     onchange='reload(\"pj_id\",\"\")'>
     <OPTION VALUE=''></OPTION>\n");
   // pour tous les projets
-  foreach($db_table_projects as &$project)
-  {
+  foreach($db_table_projects as &$project) {
     // après avoir recharger le page, placer la liste sur la bonne option
-    if($project["id"] == $_GET['pj_id'])
-    {
-      // utf8_decode remplace le utf8 en ISO-8859-1 pour l'affiche dans le browser
-      // problème avec le caractère numéro 
-      echo("<OPTION SELECTED VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+    if(isset($_GET['pj_id'])) {
+      if($project["id"] == $_GET['pj_id']) {
+        // utf8_decode remplace le utf8 en ISO-8859-1 pour l'affiche dans le browser
+        // problème avec le caractère numéro 
+        echo("<OPTION SELECTED VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+      }
+      else {
+        echo("<OPTION VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+      }
     }
-    else
-    {
+    else {
       echo("<OPTION VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
     }
   }
@@ -55,20 +57,25 @@
   // pour les testplans
 
   echo("testplan : <SELECT ID='tp_id' NAME='tp_id' ACTION='#' >");
-    //ONCHANGE='reload(\"tp_id\",\"pj_id=".$_GET['pj_id']."\")'>
   echo("<OPTION VALUE=''></OPTION>");
   // pour tous les testplans
-  $db_table_testplans = get_table_testplans($_GET['pj_id']);
-  foreach($db_table_testplans as &$testplan)
-  {
-    // après avoir recharger le page, placer la liste sur la bonne option
-    if($testplan["id"] == $_GET['tp_id'])
-    {
-      echo "<OPTION SELECTED VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
-    }
-    else
-    {
-      echo "<OPTION VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
+  if(isset($_GET['pj_id'])) {
+    $db_table_testplans = get_table_testplans($_GET['pj_id']);
+    foreach($db_table_testplans as &$testplan) {
+      // après avoir recharger le page, placer la liste sur la bonne option
+      // la variable tp_id est définie dans l'url
+      if(isset($_GET['tp_id'])) {
+        // l'id courant
+        if($testplan["id"] == $_GET['tp_id']) {
+          echo "<OPTION SELECTED VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
+        }
+        else {
+          echo "<OPTION VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
+        }
+      }
+      else {
+        echo "<OPTION VALUE='".$testplan["id"]."'>".utf8_decode($testplan["name"])."</OPTION>\n";
+      }
     }
   }
   echo("</SELECT>\n");
@@ -78,8 +85,7 @@
 
 
   // afficher uniquement si le testplan est selectionné
-  if( $_GET['tp_id'] )
-  {
+  if( isset($_GET['tp_id']) ) {
 
 
 
@@ -87,30 +93,29 @@
     // plutot qu'un select multiple faire plusieurs checkbox
     echo("<BR><FIELDSET>");
     echo("<LEGEND>Build</LEGEND>");
-	// recuperer la liste de build pour ce testplan
+  // recuperer la liste de build pour ce testplan
     $db_table_builds = get_table_builds($_GET['tp_id']);
 
     // pour toutes les builds
     // pour la présentation sauter une ligne toutes les 4 builds
     $i = 1;
     $input = "<TABLE><TR>";
-    foreach($db_table_builds as &$build)
-    {
+    foreach($db_table_builds as &$build) {
       $input = $input."<TD>";
       $input = $input."<INPUT TYPE='checkbox' NAME='bd_id[]'";
       // vérifier si la build est selectionnée
-	  // le tableau dans l'url "bd_id" contient les builds selectionnées
-	  // in_array permet de verifier si une valeur existe dans un tableau
-      if(in_array($build["id"], $_GET["bd_id"]))
-      {
-        $input = $input." CHECKED";
+      // le tableau dans l'url "bd_id" contient les builds selectionnées
+      // in_array permet de verifier si une valeur existe dans un tableau
+      if(isset($_GET["bd_id"])) {
+        if(in_array($build["id"], $_GET["bd_id"])) {
+          $input = $input." CHECKED";
+        }
       }
       $input = $input." value='".$build["id"]."'>";
       $input = $input.$build["name"]." (".$build["release_date"].")";
       $input = $input."</INPUT></TD>";
       // sauter une ligne toutes les 4 builds
-      if($i == 4)
-      {
+      if($i == 4) {
         $input = $input."</TR><TR>";
         $i = 0;
       }
@@ -130,7 +135,7 @@
     echo("Show coverage (increase report loading time):");
     // après avoir recharger le page, placer la liste sur la bonne option
     $input = "<INPUT TYPE='checkbox' NAME='show_coverage'";
-    if($_GET['show_coverage'] == "on")
+    if(isset($_GET['show_coverage']))
     {
       $input = $input." CHECKED";
     }
@@ -158,7 +163,7 @@
   $input = "<INPUT TYPE='checkbox' ID='checkbox_hide_level' NAME='checkbox_hide_level'";
   // cocher la checkbox si dans l'url il y a *checkbox_hide_level=on* ou
   // si le testplan id n'est pas défini. Cela permet d'avoir la checkbox cocher par défaut.
-  if($_GET['checkbox_hide_level'] == "on" or (! isset($_GET['tp_id']))  )
+  if ( isset($_GET['checkbox_hide_level']) or (! isset($_GET['tp_id'])) )
   {
     $input = $input." CHECKED";
   }

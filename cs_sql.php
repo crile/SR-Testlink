@@ -33,8 +33,7 @@
 
 
     // ce testsuite n'existe pas dans la table
-    if($table_results[$testsuite_id] == null)
-    {
+    if( isset($table_results[$testsuite_id]) == false ) {
       $sql = " SELECT NH.id,
         NH.name,
         NH.node_order,
@@ -107,7 +106,7 @@
 
 
   // @brief  fetch en fonction de la base de donnée
-  function cs_database_fetch_object($query_result, $database)
+  function cs_database_fetch_object($query_result)
   {
     $database = $GLOBALS['database_name'];
     if($database == "mysql")
@@ -206,8 +205,7 @@
   //        sauver aussi le niveau max comme variable global $tree_level_max
   // @param array_build_id est une liste d'id de builds
   function generate_result_table($testproject_id, $testplan_id, $array_build_id,
-    $show_coverage)
-  {
+    $show_coverage) {
     $db_table_node_types = $GLOBALS['db_table_node_types'];
     // pour les totaux
     global $stats_table;
@@ -219,7 +217,10 @@
     $table_results = 
       quick_sort_testsuite_table($table_results);
 
-    $list_build_id = implode(",",$array_build_id);
+	$list_build_id = "";
+	if($array_build_id != null) {
+	  $list_build_id = implode(",", $array_build_id);
+	}
 
     $select = "SELECT 
       status,
@@ -261,8 +262,7 @@
 
       $sql = $select.$from.$where_clause_1.$where_clause_2.$where_clause_3.
 				$group_by;
-      if($array_build_id != null)
-      {
+      if($array_build_id != null) {
         $sql = $select.$from.$where_clause_1.$where_clause_2_build.
 	  			$where_clause_3.$group_by;
       }
@@ -275,6 +275,7 @@
       $request = cs_database_query($sql);
       while( $result = cs_database_fetch_object($request) )
       {
+		$status = "";
         // remplir le tableau
         // le nombre de passed, failed, etc
         if($result->status == "p")
@@ -314,7 +315,7 @@
 
 
     // calcul pour le couverture de tests
-    if($show_coverage == "on")
+    if(isset($_GET['show_coverage']))
     {
       $testcase_number_by_testsuite = 
         get_testcase_number_by_testsuite($testproject_id);

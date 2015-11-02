@@ -130,6 +130,7 @@
     $j = 0;
     while($i <= 10)
     {
+	  $tmp_string = "";
 
       // mettre la bonne couleur sur la case
       if($i <= ($percent / 10))
