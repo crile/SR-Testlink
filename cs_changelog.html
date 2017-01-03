@@ -1,80 +1,141 @@
-<HTML XMLNS="HTTP://WWW.W3.ORG/1999/XHTML" XML:LANG="EN" >
-  <HEAD>
-    <TITLE>cs_stats</TITLE>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=ISO-8859-1" />
-    <LINK REL='stylesheet' TYPE='text/css' HREF='cs_stats.css'/>
-  </HEAD>
-
-  <BODY id='changelog'>
-
-
-	<DIV id='changelog_header'>
-	  <H1>Release: v2.2 - Date 2015-11-02</H1>
-	  <P><B>Description:</B></P>
-	  <UL>
-		<LI>Fix: fix test on unset variables</Li>
-	  </UL>
-	</DIV>
-	<H3>CSS</H3>
-	<H3>JAVASCRIPT</H3>
-	<H3>PHP/HTML</H3>
-	<UL>
-		<LI>Replace if($_GET['xxxx']) by  if(isset($_GET['xxxx'])) to test unset variables</Li>
-	</UL>
-	<H3>SQL</H3>
-
-
-
-
-
-	<DIV id='changelog_header'>
-	  <H1>Release: v2.1 - Date 2015-10-08</H1>
-	  <P><B>Description:</B></P>
-	  <UL>
-		<LI>Improvement: Add a legend</Li>
-	  </UL>
-	</DIV>
-	<H3>CSS</H3>
-	<UL>
-	  <LI>Add changelog css</LI>
-	  <LI>Improve CSS for cs_tool.php</LI>
-	</UL>
-	<H3>JAVASCRIPT</H3>
-	<H3>PHP/HTML</H3>
-	<UL>
-	  <LI>By default the checkbox *low level testsuite* is checked</LI>
-	  <LI>Add a legend</LI>
-	  <LI>Modify executed percent display</LI>
-	</UL>
-	<H3>SQL</H3>
-
-
-
-
-	<DIV id='changelog_header'>
-	  <H1>Release: v2.0 - Date 2015-10-06</H1>
-	  <P><B>Description:</B></P>
-	  <UL>
-		<LI>New feature: Consult without login</LI>
-		<LI>Improvement: general display improvement</LI>
-	  </UL>
-	</DIV>
-	<H3>CSS</H3>
-	<UL>
-	  <LI>New style *button*</LI>
-	</UL>
-	<H3>JAVASCRIPT</H3>
-	<H3>PHP/HTML</H3>
-	<UL>
-	  <LI>Save the state of *low level testsuite* checkbox</LI>
-	  <LI>Allow anyone to consult the statistics</LI>
-	  <LI>Hide misleading *total* row</LI>
-	  <LI>Move the reset link (form reset)</LI>
-	  <LI>Add a changelog page (click on version X.Y)</LI>
-	</UL>
-	<H3>SQL</H3>
-
-
-
-  </BODY>
-</HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="cs_changelog.css" type="text/css" />
+</head>
+<body>
+<h1 id="release-2.3---date-2017-01-03">Release: 2.3 - Date 2017-01-03</h1>
+<h3 id="summary">Summary</h3>
+<ul>
+<li>Sort test plans list by name in the form</li>
+</ul>
+<h3 id="details">Details</h3>
+<ul>
+<li><strong>CSS</strong>
+<ul>
+<li>Split <strong>CSS</strong> file</li>
+</ul></li>
+<li><strong>SQL</strong>
+<ul>
+<li>Add &quot;ORDER BY&quot; in test plan request</li>
+</ul></li>
+</ul>
+<h1 id="release-2.2---date-2015-11-02">Release: 2.2 - Date 2015-11-02</h1>
+<h3 id="summary-1">Summary</h3>
+<ul>
+<li>Fix test condition on unset variables</li>
+</ul>
+<h3 id="details-1">Details</h3>
+<ul>
+<li><strong>PHP/HTML</strong>
+<ul>
+<li>Replace <code>if($_GET['xxxx'])</code> by <code>if(isset($_GET['xxxx']))</code> to test unset variables</li>
+</ul></li>
+</ul>
+<h1 id="release-2.1---date-2015-10-08">Release: 2.1 - Date 2015-10-08</h1>
+<h3 id="summary-2">Summary</h3>
+<ul>
+<li>Add a legend</li>
+</ul>
+<h3 id="details-2">Details</h3>
+<ul>
+<li><strong>CSS</strong>
+<ul>
+<li>Add changelog CSS</li>
+<li>Improve CSS for <code>sr_tools.php</code></li>
+</ul></li>
+<li><strong>PHP/HTML</strong>
+<ul>
+<li>By default the checkbox <code>low level testsuite</code> is checked</li>
+<li>Add a legend</li>
+<li>Modify executed percent display</li>
+</ul></li>
+</ul>
+<h1 id="release-2.0---date-2015-10-06">Release: 2.0 - Date 2015-10-06</h1>
+<h3 id="summary-3">Summary</h3>
+<ul>
+<li>Consult without login</li>
+<li>General display improvement</li>
+</ul>
+<h3 id="details-3">Details</h3>
+<ul>
+<li><strong>CSS</strong>
+<ul>
+<li>New style for the button</li>
+</ul></li>
+<li><strong>PHP/HTML</strong>
+<ul>
+<li>Save the state of <code>low level testsuite</code> checkbox</li>
+<li>Allow anyone to consult the statistics</li>
+<li>Hide misleading <code>total</code> row</li>
+<li>Move the reset link (form reset)</li>
+<li>Add a changelog page (click on version X.Y)</li>
+</ul></li>
+</ul>
+<h1 id="release-1.2---date-2015-06-22">Release: 1.2 - Date 2015-06-22</h1>
+<h3 id="summary-4">Summary</h3>
+<ul>
+<li>Add pie chart</li>
+<li>Add &quot;hide 100% passed&quot;</li>
+</ul>
+<h3 id="details-4">Details</h3>
+<ul>
+<li><strong>CSS</strong>
+<ul>
+<li>Update the <strong>CSS</strong></li>
+</ul></li>
+<li><strong>JAVASCRIPT</strong>
+<ul>
+<li>Add chart.js</li>
+<li>Add new function to draw the pie chart</li>
+</ul></li>
+<li><strong>PHP/HTML</strong>
+<ul>
+<li>Add &quot;hide 100% passed&quot;</li>
+<li>Add the percentage of passed.</li>
+<li>Modify the FORM</li>
+</ul></li>
+<li><strong>SQL</strong>
+<ul>
+<li>Fix bugs</li>
+</ul></li>
+</ul>
+<h1 id="release-1.1---date-2015-06-10">Release: 1.1 - Date 2015-06-10</h1>
+<h3 id="summary-5">Summary</h3>
+<ul>
+<li>Add button to hide low level testsuite</li>
+<li>Change the layout</li>
+<li>Add <strong>CSS</strong></li>
+</ul>
+<h3 id="details-5">Details</h3>
+<ul>
+<li><strong>CSS</strong>
+<ul>
+<li>Add <strong>CSS</strong></li>
+</ul></li>
+<li><strong>JAVASCRIPT</strong>
+<ul>
+<li>Add new toggle function</li>
+</ul></li>
+<li><strong>PHP/HTML</strong>
+<ul>
+<li>Modify the FORM</li>
+</ul></li>
+<li><strong>SQL</strong>
+<ul>
+<li>Keep the testsuite level (in the tree view)</li>
+</ul></li>
+</ul>
+<h1 id="release-1.0---date-2015-06-10">Release: 1.0 - Date 2015-06-10</h1>
+<h3 id="summary-6">Summary</h3>
+<ul>
+<li>Beta version</li>
+</ul>
+<h3 id="details-6">Details</h3>
+</body>
+</html>

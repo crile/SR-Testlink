@@ -5,15 +5,15 @@
 
   // @brief  page principale
   // @author Cyril SANTUNE
-  // @date   2015-06-16: changement du texte pour le contact de l'administrateur
-  // @date   2015-06-18: ajout de graphique camembert
+  // @date   2015-10-01: suppression de la ligne *total* du tableau
+  // @date   2015-09-30: rendre la page accessible sans login
   // @date   2015-06-19: remplacement de la fonction round pour les moyennes
   //         puisque round peut faire un arrondie superieur donc par exemple
   //         obtenir 100% alors que tous les tests ne sont pas passés.
   //         Ajout de class name sur les TRs du tableau résultat pour un 
   //         filtrage futur (dans le javascript)
-  // @date   2015-09-30: rendre la page accessible sans login
-  // @date   2015-10-01: suppression de la ligne *total* du tableau
+  // @date   2015-06-18: ajout de graphique camembert
+  // @date   2015-06-16: changement du texte pour le contact de l'administrateur
 
 
 
@@ -172,7 +172,7 @@
         <TD style='width:80%'>
         </TD>
         <TD style='text-align:right'>
-          <A STYLE='font-size:12px' HREF='cs_changelog.html'>Version 2.2</A>
+          <A STYLE='font-size:12px' HREF='cs_changelog.html'>Version 2.3</A>
         </TD>
         <TD style='text-align:right'>
           <A STYLE='font-size:12px' HREF='mailto:cyril.santune@gmail.com?Subject=testlink-cs_stats'>Contact administrator</A>

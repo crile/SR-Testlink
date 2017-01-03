@@ -1,0 +1,33 @@
+/* css pour la page changelog */
+
+/* # pour définir un id et non une class */
+/* en html <body id='changelog'> */
+html, body
+{
+  background:    #EEE; 
+  font-family:   'Trebuchet MS', Arial;
+  font-size:     12px;
+  margin:        20px;
+  width:         600px;
+}
+h1
+{
+  border:        3px solid #99BBE8;
+  font-size:     18px;
+  margin-top:    16px;
+  padding:       5px;
+  text-transform: capitalize;
+}
+h3
+{
+  border-bottom: 3px double #15428b;
+  font-size:     14px;
+  margin-top:     5px;
+  padding-bottom: 5px;
+  text-transform: capitalize;
+}
+li
+{
+  list-style-type: circle;
+  margin-left:0px;
+}

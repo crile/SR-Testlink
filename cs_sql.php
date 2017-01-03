@@ -5,9 +5,10 @@
 
   // @brief  fonctions liées à la base de donnée
   // @author Cyril SANTUNE
-  // @date   2015-06-16: ajout de $tree_level_max
+  // @date   2017-01-03: ajout d'un "order by" pour le requete sur les testplans
   // @date   2015-06-18: ajout de commentaire, initialisation de variable pour 
   //         éviter les érreurs
+  // @date   2015-06-16: ajout de $tree_level_max
 
 
 
@@ -460,7 +461,8 @@
       $sql = "SELECT id, name
         FROM nodes_hierarchy 
         WHERE node_type_id = '".$db_table_node_types["testplan"]."'
-        AND parent_id = ".$project_id;
+        AND parent_id = ".$project_id."
+        ORDER BY name ASC";
       $request = cs_database_query($sql);
       while( $result = cs_database_fetch_object($request) )
       {

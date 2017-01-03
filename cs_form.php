@@ -5,16 +5,16 @@
 
   // @brief  FORM HTML
   // @author Cyril SANTUNE
-  // @date   2015-06-18: supprimer le onload pour les testplans
-  // @date   2015-06-18: ajouter un bouton pour cacher les testsuites executés
-  //         à 100 pourcent
+  // @date   2015-10-12(Cyril SANTUNE): ajouter *executed %* dans la légende
+  // @date   2015-10-08(Cyril SANTUNE): ajouter la légende
+  // @date   2015-10-07(Cyril SANTUNE): cocher la checkbox(low level testsuite)
+  //         par défaut
   // @date   2015-06-19: modification de la mise en page pour le partie 
   //         "display" et ajout de la checkbox "full passed testsuite".
   //         onload actif sur les testplans à nouveau.
-  // @date   2015-10-07(Cyril SANTUNE): cocher la checkbox(low level testsuite)
-  //         par défaut
-  // @date   2015-10-08(Cyril SANTUNE): ajouter la légende
-  // @date   2015-10-12(Cyril SANTUNE): ajouter *executed %* dans la légende
+  // @date   2015-06-18: ajouter un bouton pour cacher les testsuites executés
+  //         à 100 pourcent
+  // @date   2015-06-18: supprimer le onload pour les testplans
 
 
 
