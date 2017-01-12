@@ -6,6 +6,7 @@
 
 Javascript Code
 
+2017-01-12(Cyril SANTUNE): Retrieve colors of the pie chart from the CSS
 2017-01-11(Cyril SANTUNE): nettoyage 
 2015-10-01(Cyril SANTUNE): fix sur la fonction reload
 2015-06-19(Cyril SANTUNE): modification de toggle_testsuite pour la prise
@@ -73,13 +74,50 @@ echo("function toggle_testsuite() {
 
 
 
+// retrieve CSS class with its name
+echo("
+function getStyle(className) {
+	var styles = document.styleSheets[0].rules || document.styleSheets[0].cssRules;
+    for (var x = 0; x < styles.length; x++) {
+        if (styles[x].selectorText == className) {
+			return styles[x];
+        }
+    }
+}
+");
+
+
+
+// convert rgb string to hex color
+// example 'rgb(209,209,209)' => '#d1d1d1'
+echo("
+// source: http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx/
+function colorToHex(color) {
+    if (color.substr(0, 1) === '#') {
+        return color;
+    }
+    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+    var red = parseInt(digits[2]);
+    var green = parseInt(digits[3]);
+    var blue = parseInt(digits[4]);
+    var rgb = blue | (green << 8) | (red << 16);
+    return digits[1] + '#' + rgb.toString(16);
+};
+");
+
+
 
 // dessiner un pie chart
 echo("function draw_pie_chart(obj_id, not_run, passed, failed, blocked) {
-	var not_run_color = '#A1B5BA';
-	var passed_color = '#00FF00';
-	var failed_color = '#FF0000';
-	var blocked_color = '#1ACAF6';
+	// get color from the CSS
+	var not_run_color =
+		colorToHex(getStyle('.sr_table_status_not_run').style.backgroundColor);
+	var passed_color =
+		colorToHex(getStyle('.sr_table_status_passed').style.backgroundColor);
+	var failed_color =
+		colorToHex(getStyle('.sr_table_status_failed').style.backgroundColor);
+	var blocked_color =
+		colorToHex(getStyle('.sr_table_status_blocked').style.backgroundColor);
 	if(blocked == null || blocked == 'undefined' || blocked == '')
 		blocked = 0;
 	var data = [

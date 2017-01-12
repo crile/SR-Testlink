@@ -5,6 +5,7 @@
 
 Feuille de style
 
+2015-01-12(Cyril SANTUNE): Change the color and remove useless Class
 2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
 2015-10-08(Cyril SANTUNE): ajout d'une partie css pour la page changelog
 2015-06-18(Cyril SANTUNE): réindentation et mise à jour pour la colonne status
@@ -113,9 +114,9 @@ form fieldset legend
 }
 .sr_form_button
 {
-  font: bold 11px 'Trebuchet MS';
+  font: bold 12px 'Trebuchet MS';
   text-decoration: none;
-  background-color: #EEEEEE;
+  background-color: #FFFFFF;
   color: #333333;
   padding: 2px 6px 2px 6px;
   border-top: 1px solid #CCCCCC;
@@ -151,35 +152,19 @@ form fieldset legend
 /* couleur pour la table status et légende */
 .sr_table_status_not_run
 {
-  background:      #A1B5BA;
+  background:      #D0D0D0;
 }
 .sr_table_status_passed
 {
-  background:      #00FF00;
+  background:      #C6EFCF;
 }
 .sr_table_status_failed
 {
-  background:      #FF0000;
+  background:      #FFC7CF;
 }
 .sr_table_status_blocked
 {
-  background:      #1ACAF6;
-}
-.sr_font_status_not_run
-{
-  color:      #A1B5BA;
-}
-.sr_font_status_passed
-{
-  color:      #00FF00;
-}
-.sr_font_status_failed
-{
-  color:      #FF0000;
-}
-.sr_font_status_blocked
-{
-  color:      #1ACAF6;
+  background:      #9BC2E7;
 }
 
 
@@ -209,16 +194,6 @@ form fieldset legend
   padding-top:     5px;
   width:           8px;
 }
-.sr_table_percent_color_1
-{
-  background:      #00FF00;
-}
-.sr_table_percent_color_2
-{
-  background:      #FF0000;
-}
-
-
 
 
 

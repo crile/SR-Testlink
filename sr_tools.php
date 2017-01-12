@@ -52,9 +52,9 @@ function get_percent_html_table($percent) {
 		$tmp_string = "";
 		// mettre la bonne couleur sur la case
 		if($i <= ($percent / 10))
-			$output = $output."<TD CLASS='sr_table_percent_color_1'>";
+			$output = $output."<TD CLASS='sr_table_status_passed'>";
 		else
-			$output = $output."<TD CLASS='sr_table_percent_color_2'>";
+			$output = $output."<TD CLASS='sr_table_status_failed'>";
 
 		// afficher le pourcentage en lettre a peu pres au milieu
 		if($i >= 4) {

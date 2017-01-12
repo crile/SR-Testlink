@@ -6,6 +6,7 @@
 
 HTML FORM 
 
+2017-01-12(Cyril SANTUNE): Code cleaning
 2017-01-11(Cyril SANTUNE): Modification de la partie testplans
 2015-10-12(Cyril SANTUNE): ajouter *executed %* dans la légende
 2015-10-08(Cyril SANTUNE): ajouter la légende
@@ -147,83 +148,80 @@ if(isset($_GET['tp_id'])) {
 
 
 // Légende
-echo("<BR><TABLE ><TR><TD>");
-// cacher les sous testsuites
-echo("<BR><FIELDSET>");
-echo("<LEGEND>Display</LEGEND>");
-echo("hide:
+echo("
+<BR>
+<TABLE><TR><TD><BR>
+<FIELDSET>
+<LEGEND>Display</LEGEND>
+Hide:
 <UL>
-<LI>low level testsuite:");
-$input = "<INPUT TYPE='checkbox' ID='checkbox_hide_level' NAME='checkbox_hide_level'";
+	<LI>low level testsuite:");
+$input = "<INPUT 
+	TYPE='checkbox'
+	ID='checkbox_hide_level'
+	NAME='checkbox_hide_level'";
 // cocher la checkbox si dans l'url il y a *checkbox_hide_level=on* ou
 // si le testplan id n'est pas défini. Cela permet d'avoir la checkbox cocher par défaut.
-if ( isset($_GET['checkbox_hide_level']) or (! isset($_GET['tp_id'])) ) {
+if(isset($_GET['checkbox_hide_level']) or (! isset($_GET['tp_id']))) 
 	$input = $input." CHECKED";
-}
 $input = $input." ONCLICK='toggle_testsuite()'></INPUT>";
 echo($input);
-echo("  </LI>");
-// cacher les testsuites à 100%
 echo("
-<LI>complete testsuite (100% executed): 
-<INPUT TYPE='checkbox' ID='checkbox_hide_complete' 
-ONCLICK='toggle_testsuite()'></INPUT>
-</LI>");
-// cacher les testsuites à 100% de passed
-echo("
-<LI>full passed testsuite (all executed tests are passed): 
-<INPUT TYPE='checkbox' ID='checkbox_hide_passed' 
-ONCLICK='toggle_testsuite()'></INPUT>
-</LI>
-</UL>");
-echo("</FIELDSET>");
-echo("</TD>");
-
-
-// créer un espace entre la colonne *display* et *legend*
-echo("<TD STYLE='width:10%'></TD>");
-echo("<TD><FIELDSET>");
-echo("<LEGEND>Legend</LEGEND>");
-echo("<TABLE>
-<TR>
-<TD>Not run</TD>
-<TD CLASS='sr_table_status_not_run sr_form_table_legend_td'></TD>
+	</LI>
+	<LI>complete testsuite (100% executed): 
+		<INPUT TYPE='checkbox' ID='checkbox_hide_complete'
+		ONCLICK='toggle_testsuite()'></INPUT>
+	</LI>
+	<LI>full passed testsuite (all executed tests are passed): 
+	<INPUT TYPE='checkbox' ID='checkbox_hide_passed' 
+	ONCLICK='toggle_testsuite()'></INPUT>
+	</LI>
+</UL>
+</FIELDSET>
+</TD>
+<TD STYLE='width:10%'></TD>
+<TD><FIELDSET>
+<LEGEND>Legend</LEGEND>
+<TABLE>
+	<TR>
+		<TD>Not run</TD>
+		<TD CLASS='sr_table_status_not_run sr_form_table_legend_td'></TD>
+	</TR>
+	<TR>
+		<TD>Passed</TD>
+		<TD CLASS='sr_table_status_passed sr_form_table_legend_td'></TD>
+	</TR>
+	<TR>
+		<TD>Failed</TD>
+		<TD CLASS='sr_table_status_failed sr_form_table_legend_td'></TD>
+	</TR>
+	<TR>
+		<TD>Blocked</TD>
+		<TD CLASS='sr_table_status_blocked sr_form_table_legend_td'></TD>
+	</TR>
+	<TR>
+		<TD>Executed %</TD>
+		<TD CLASS='sr_form_table_legend_td'>=</TD>
+	<TD>
+		(<SPAN CLASS='sr_table_status_passed'>Passed</SPAN> + 
+		<SPAN CLASS='sr_table_status_failed'>Failed</SPAN>) / Total </TD>
+	</TR>
+</TABLE>
+</FIELDSET>
+</TD>
 </TR>
-<TR>
-<TD>Passed</TD>
-<TD CLASS='sr_table_status_passed sr_form_table_legend_td'></TD>
-</TR>
-<TR>
-<TD>Failed</TD>
-<TD CLASS='sr_table_status_failed sr_form_table_legend_td'></TD>
-</TR>
-<TR>
-<TD>Blocked</TD>
-<TD CLASS='sr_table_status_blocked sr_form_table_legend_td'></TD>
-</TR>
-<TR>
-<TD>Executed %</TD>
-<TD CLASS='sr_form_table_legend_td'>=</TD>
-<TD>
-(<SPAN CLASS='sr_font_status_passed'>Passed</SPAN> + 
-<SPAN CLASS='sr_font_status_failed'>Failed</SPAN>) / Total </TD>
-</TR>
-</TABLE>");
-echo("</FIELDSET>");
-echo("</TD></TR></TABLE>");
-
-
-
-// le bouton submit/OK
-// CLASS='button' pour définir le style du bouton
-echo("<BR><INPUT CLASS='sr_form_button' NAME='submit' TYPE='submit' value=' OK '/>\n");
-// CLASS='button' ainsi mon lien ressemble a un bouton pas besoin de faire du
-// javascript et de input pour avoir le lien
-echo("<A CLASS='sr_form_button' HREF='sr_testlink.php?session_reset=yes'> Reset </A>");
-
-
-
-echo("</FORM>\n");
+</TABLE>
+<BR>
+<INPUT
+	CLASS='sr_form_button'
+	NAME='submit'
+	TYPE='submit'
+	VALUE=' Apply '/>
+<A HREF='sr_testlink.php?session_reset=yes'>
+	<BUTTON type='button' CLASS='sr_form_button'> Reset </BUTTON>
+</A>
+</FORM>
+");
 
 
 
