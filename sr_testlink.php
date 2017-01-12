@@ -6,6 +6,7 @@
 
 Page principale
 
+2017-01-11(Cyril SANTUNE): suppression de la colonne coverage
 2015-10-01(Cyril SANTUNE): suppression de la ligne *total* du tableau
 2015-09-30(Cyril SANTUNE): rendre la page accessible sans login
 2015-06-19(Cyril SANTUNE): remplacement de la fonction round pour les moyennes

@@ -4,8 +4,9 @@
 
 /*
 
-le code javascript
+Javascript Code
 
+2017-01-11(Cyril SANTUNE): nettoyage 
 2015-10-01(Cyril SANTUNE): fix sur la fonction reload
 2015-06-19(Cyril SANTUNE): modification de toggle_testsuite pour la prise
 en compte de plusieurs critères

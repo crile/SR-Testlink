@@ -6,6 +6,7 @@
 
 fonctions liées à la base de donnée
 
+2017-01-11(Cyril SANTUNE): Refactoring de toute la partie generate_result_table
 2017-01-03(Cyril SANTUNE): ajout d'un "order by" pour le requete sur les testplans
 2015-06-18(Cyril SANTUNE): ajout de commentaire, initialisation de variable pour
 éviter les érreurs
@@ -228,11 +229,17 @@ $level, $show_coverage) {
 		// compris le "notrun" puisque le
 		// testcase_number_by_testsuite retourne 0 si le testcase
 		// n'est dans aucun testplan)
+		// FIXME ignorer également les testsuites commençant par '_', il
+		// faudrait faire ce traitement avant parce qu'ici il a déjà parcourur
+		// tous les testsuites enfant etc
 		$tmp = $testsuite["passed"] + $testsuite["failed"] +
 		$testsuite["blocked"] + $testsuite["notrun"];
-		if($tmp!=0) {
+		if(($tmp!=0) and (preg_match("/^_.*/",$testsuite["name"])==0)) {
 			// inserer au debut de la liste
 			array_unshift($tree,$testsuite);
+		}
+		else {
+			unset($tree);
 		}
 	}
 	return $tree;

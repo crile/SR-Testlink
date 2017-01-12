@@ -29,6 +29,7 @@
 	* Refactoring everything to take into account the multi-test plans request
 	* Simplify the request on build table and testsuite table
 	* New view (sr_vw_test plans)
+	* Ignore testsuite starting with an ``_``
 
 
 

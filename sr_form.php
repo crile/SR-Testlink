@@ -4,8 +4,9 @@
 
 /*
 
-FORM HTML
+HTML FORM 
 
+2017-01-11(Cyril SANTUNE): Modification de la partie testplans
 2015-10-12(Cyril SANTUNE): ajouter *executed %* dans la légende
 2015-10-08(Cyril SANTUNE): ajouter la légende
 2015-10-07(Cyril SANTUNE): cocher la checkbox(low level testsuite)

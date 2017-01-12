@@ -6,6 +6,7 @@
 
   fonction diverses
 
+  2017-01-11(Cyril SANTUNE): nettoyage
   2015-10-08(Cyril SANTUNE): réécriture de la fonction get_percent_html_table()
 	et utilisation du fichier css
   2015-06-19(Cyril SANTUNE): modification liée au feuille de style
