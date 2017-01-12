@@ -1,6 +1,37 @@
 
 
 
+# SR-Testlink Changelog
+
+**Simple Report For Testlink Changelog**
+
+
+
+# Release: 3.0 - 2017-01-11
+
+
+### Summary
+
+* Select several test plans is now possible
+* Modify the behavior of the coverage button
+* Known bug: After build selection, change test plan can lead to wrong result,
+  use the "reset" button in this case
+* Rename the project
+
+### Details
+
+* **JAVASCRIPT**
+	* Cleaning
+* **PHP/HTML**
+	* Coverage column disappears
+	* Coverage doesn't show obsolete testcases or never executed testcases
+* **SQL**
+	* Refactoring everything to take into account the multi-test plans request
+	* Simplify the request on build table and testsuite table
+	* New view (sr_vw_test plans)
+
+
+
 # Release: 2.3 - Date 2017-01-03
 
 

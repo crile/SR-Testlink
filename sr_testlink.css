@@ -1,15 +1,17 @@
 
 
 
+/* 
 
-/* @brief  feuille de style
-   @author Cyril SANTUNE
-   @date   2015-06-16: création
-   @date   2015-06-18: réindentation et mise à jour pour la colonne status du
-           tableau résultat
-   @date   2015-06-19: ajout d'un item pour les listes ul
-   @date   2015-10-08(Cyril SANTUNE): ajout d'une partie css pour la page changelog
-   @date   2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
+Feuille de style
+
+2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
+2015-10-08(Cyril SANTUNE): ajout d'une partie css pour la page changelog
+2015-06-18(Cyril SANTUNE): réindentation et mise à jour pour la colonne status
+du tableau résultat
+2015-06-19(Cyril SANTUNE): ajout d'un item pour les listes ul
+2015-06-16(Cyril SANTUNE): création
+
 */
 
 
@@ -85,12 +87,12 @@ form fieldset legend
   line-height:  15px;
 }
 
-#cs_form ul
+#sr_form ul
 {
   padding-left: 15px;
 }
 
-#cs_form table
+#sr_form table
 {
   background:    #EEE; 
   border:        none;
@@ -100,16 +102,16 @@ form fieldset legend
 }
 
 /* pour un tableau imbriqué dans un fieldset */ 
-#cs_form fieldset table
+#sr_form fieldset table
 {
   border-spacing:  5px;
   width: auto;
 }
-.cs_form_table_legend_td
+.sr_form_table_legend_td
 {
   width:           10px;
 }
-.cs_form_button
+.sr_form_button
 {
   font: bold 11px 'Trebuchet MS';
   text-decoration: none;
@@ -129,7 +131,7 @@ form fieldset legend
 
 /* tableau status */
 
-#cs_table_status table
+#sr_table_status table
 {
   border-spacing:  0px;
   font:            14px 'Trebuchet MS';
@@ -138,7 +140,7 @@ form fieldset legend
   margin-right:    0px;
   margin-top:      0px;
 }
-#cs_table_status td
+#sr_table_status td
 {
   height:          30px;
   /* ecart entre le contenu de la cellule et le bord */
@@ -147,35 +149,35 @@ form fieldset legend
   text-align:      center;
 }
 /* couleur pour la table status et légende */
-.cs_table_status_not_run
+.sr_table_status_not_run
 {
   background:      #A1B5BA;
 }
-.cs_table_status_passed
+.sr_table_status_passed
 {
   background:      #00FF00;
 }
-.cs_table_status_failed
+.sr_table_status_failed
 {
   background:      #FF0000;
 }
-.cs_table_status_blocked
+.sr_table_status_blocked
 {
   background:      #1ACAF6;
 }
-.cs_font_status_not_run
+.sr_font_status_not_run
 {
   color:      #A1B5BA;
 }
-.cs_font_status_passed
+.sr_font_status_passed
 {
   color:      #00FF00;
 }
-.cs_font_status_failed
+.sr_font_status_failed
 {
   color:      #FF0000;
 }
-.cs_font_status_blocked
+.sr_font_status_blocked
 {
   color:      #1ACAF6;
 }
@@ -187,19 +189,19 @@ form fieldset legend
 
 /* tableau percent */
 
-#cs_table_percent
+#sr_table_percent
 {
   font:            14px 'Trebuchet MS';
   margin:          0px;
   padding:         0px;
 }
-#cs_table_percent table
+#sr_table_percent table
 {
   border-spacing:  0px;
   font:            inherit;
   margin: auto;
 }
-#cs_table_percent td
+#sr_table_percent td
 {
   padding-bottom:  5px;
   padding-left:    0px;
@@ -207,11 +209,11 @@ form fieldset legend
   padding-top:     5px;
   width:           8px;
 }
-.cs_table_percent_color_1
+.sr_table_percent_color_1
 {
   background:      #00FF00;
 }
-.cs_table_percent_color_2
+.sr_table_percent_color_2
 {
   background:      #FF0000;
 }
@@ -261,8 +263,3 @@ form fieldset legend
   color:         #15428B;
   padding:       5px 10px 5px 10px;
 }
-
-
-
-
-
