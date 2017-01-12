@@ -23,35 +23,39 @@ HTML FORM
 
 
 
-echo("<FORM ID='sr_form' METHOD=\"get\" ACTION=\"#\">\n");
-
-
-
-// liste des projets
-echo("<BR><FIELDSET>");
-echo("<LEGEND>Project & Testplan</LEGEND>");
-echo("Project:
-<SELECT ID='pj_id' NAME='pj_id' ACTION='#'
-onchange='reload(\"pj_id\",\"\")'>
-<OPTION VALUE=''></OPTION>\n");
+echo("
+<FORM ID='sr_form' METHOD=\"get\" ACTION=\"#\">
+<BR><FIELDSET>
+<LEGEND>Project & Testplan</LEGEND>
+Project :
+<SELECT
+	ID='pj_id'
+	NAME='pj_id'
+	ACTION='#'
+	onchange='reload(\"pj_id\",\"\")'>
+<OPTION VALUE=''></OPTION>");
 // pour tous les projets
 foreach($db_table_projects as &$project) {
 	// après avoir recharger le page, placer la liste sur la bonne option
 	if(isset($_GET['pj_id'])) {
 		if($project["id"] == $_GET['pj_id']) {
-			// utf8_decode remplace le utf8 en ISO-8859-1 pour l'affiche dans le browser
-			// problème avec le caractère numéro 
-			echo("<OPTION SELECTED VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+			// utf8_decode remplace le utf8 en ISO-8859-1 pour l'affiche dans le
+			// browser, problème avec le caractère numéro 
+			echo("<OPTION SELECTED 
+				VALUE='".$project["id"]."'>"
+				.utf8_decode($project["name"])."</OPTION>");
 		}
 		else {
-			echo("<OPTION VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+			echo("<OPTION VALUE='".$project["id"]."'>"
+			.utf8_decode($project["name"])."</OPTION>");
 		}
 	}
 	else {
-		echo("<OPTION VALUE='".$project["id"]."'>".utf8_decode($project["name"])."</OPTION>\n");
+		echo("<OPTION VALUE='".$project["id"]."'>"
+		.utf8_decode($project["name"])."</OPTION>");
 	}
 }
-echo("</SELECT>\n");
+echo("</SELECT>");
 
 
 
@@ -114,9 +118,8 @@ if(isset($_GET['tp_id'])) {
 		// le tableau dans l'url "bd_id" contient les builds selectionnées
 		// in_array permet de verifier si une valeur existe dans un tableau
 		if(isset($_GET["bd_id"])) {
-			if(in_array($build["id"], $_GET["bd_id"])) {
+			if(in_array($build["id"], $_GET["bd_id"]))
 				$input = $input." CHECKED";
-			}
 		}
 		$input = $input." value='".$build["id"]."'>";
 		$input = $input.$build["name"]." (".$build["release_date"].")";
@@ -126,7 +129,7 @@ if(isset($_GET['tp_id'])) {
 			$input = $input."</TR><TR>";
 			$i = 0;
 		}
-		$i = $i + 1;
+		$i+=1;
 	}
 	$input = $input."</TR></TABLE>";
 	echo($input);
@@ -137,9 +140,8 @@ if(isset($_GET['tp_id'])) {
 	echo("Show coverage (increase report loading time):");
 	// après avoir recharger le page, placer la liste sur la bonne option
 	$input = "<INPUT TYPE='checkbox' NAME='show_coverage'";
-	if(isset($_GET['show_coverage'])) {
+	if(isset($_GET['show_coverage']))
 		$input = $input." CHECKED";
-	}
 	$input = $input."></INPUT>";
 	echo($input);
 	echo("</FIELDSET>");
@@ -150,7 +152,10 @@ if(isset($_GET['tp_id'])) {
 // Légende
 echo("
 <BR>
-<TABLE><TR><TD><BR>
+<TABLE>
+<TR>
+<TD>
+<BR>
 <FIELDSET>
 <LEGEND>Display</LEGEND>
 Hide:
