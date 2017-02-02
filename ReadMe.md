@@ -48,6 +48,11 @@ Change the **URL** to ``http://<hostname>/sr_testlink.php``, you are ready to
 go.
 
 
+### Screenshot
+
+![](screenshot.png)
+
+
 ### Force the user login
 
 If you want a login page, replace this section in ``sr_testlink.php``
