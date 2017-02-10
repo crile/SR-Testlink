@@ -6,6 +6,7 @@
 
 HTML FORM 
 
+2017-02-10(Cyril SANTUNE): Diplay "filter" on the testplans based on its first letter
 2017-01-12(Cyril SANTUNE): Code cleaning
 2017-01-11(Cyril SANTUNE): Modification de la partie testplans
 2015-10-12(Cyril SANTUNE): ajouter *executed %* dans la légende
@@ -59,40 +60,46 @@ echo("</SELECT>");
 
 
 
-// liste des testplans
-// checkbox afin de selectionner plusieurs testplans
+// testplan list
 // FIXME lorsqu'il y a un build de selectionné si l'on change de testplan,
 // le champs build n'est pas effacé donc il reste sur un build d'un testplan
 // non selectionné
+// verify if the project is set
 if(isset($_GET['pj_id'])) {
 	$db_table_testplans = get_table_testplans($_GET['pj_id']);
-	// pour la présentation sauter une ligne tous les 4 testplans
-	$i = 1;
-	$input = "<BR>Testplan: <BR><TABLE><TR>";
+	$checkbox_grid = "<BR>Testplan: ";
+	// filter the testplan by the first letter
+	$prefix = "A";
+	// flag to know what to do about the ul tag (open, close, in)
+	$ul_state = "open";
 	foreach($db_table_testplans as &$testplan) {
-		$input = $input."<TD>";
-		$input = $input."<INPUT TYPE='checkbox' NAME='tp_id[]'
-		onchange='clean_build()'";
-		// vérifier si le testplan est selectionné
-		// le tableau dans l'url "tp_id" contient les testplans selectionnés
-		// in_array permet de verifier si une valeur existe dans un tableau
+		while($testplan["name"][0] != $prefix) {
+			$prefix++;
+			if($ul_state == "in")
+				$ul_state = "close";
+		}
+		if($ul_state == "close") {
+			$checkbox_grid .= "</UL>";
+			$ul_state = "open";
+		}
+		if($ul_state == "open") {
+			$checkbox_grid .= "<P>".$prefix."...</P>";
+			$checkbox_grid .= "<UL CLASS='checkbox_grid'>";
+			$ul_state = "in";
+		}
+		$checkbox_grid .= "<LI><INPUT TYPE='checkbox' NAME='tp_id[]'";
+		// verify if the testplan is selected
 		if(isset($_GET["tp_id"])) {
-			if(in_array($testplan["id"], $_GET["tp_id"])) {
-				$input = $input." CHECKED";
-			}
+			if(in_array($testplan["id"], $_GET["tp_id"]))
+				$checkbox_grid .= " CHECKED";
 		}
-		$input = $input." value='".$testplan["id"]."'>";
-		$input = $input.utf8_decode($testplan["name"]);
-		$input = $input."</INPUT></TD>";
-		// sauter une ligne toutes les 4 builds
-		if($i == 4) {
-			$input = $input."</TR><TR>";
-			$i = 0;
-		}
-		$i = $i + 1;
+		$checkbox_grid .= " VALUE='".$testplan["id"]."'/>";
+		$checkbox_grid .= utf8_decode($testplan["name"]);
+		$checkbox_grid .= "</LI>";
 	}
-	$input = $input."</TR></TABLE>";
-	echo($input);
+	if($ul_state == "in")
+		$checkbox_grid .= "</UL>";
+	echo($checkbox_grid);
 }
 echo("</FIELDSET>");
 

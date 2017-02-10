@@ -4,7 +4,7 @@
 
 /*
 
-Page principale
+Main Page
 
 2017-01-11(Cyril SANTUNE): suppression de la colonne coverage
 2015-10-01(Cyril SANTUNE): suppression de la ligne *total* du tableau
@@ -124,8 +124,7 @@ echo("<HTML>
 			<TR>
 				<TD style='width:80%'></TD>
 				<TD style='text-align:right'>
-					<A STYLE='font-size:12px' HREF='sr_changelog.html'>Version
-					3.0</A>
+					<A STYLE='font-size:12px' HREF='sr_changelog.html'>Version 3.1</A>
 				</TD>
 			</TR>
 		</TABLE>

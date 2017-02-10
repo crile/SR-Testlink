@@ -5,7 +5,8 @@
 
 Feuille de style
 
-2015-01-12(Cyril SANTUNE): Change the color and remove useless Class
+2017-02-10(Cyril SANTUNE): Add new "li" class for the form
+2017-01-12(Cyril SANTUNE): Change the color and remove useless Class
 2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
 2015-10-08(Cyril SANTUNE): ajout d'une partie css pour la page changelog
 2015-06-18(Cyril SANTUNE): réindentation et mise à jour pour la colonne status
@@ -124,7 +125,11 @@ form fieldset legend
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
 }
-
+.checkbox_grid li {
+	display: inline-block;
+	white-space: nowrap;
+	width: 20%;
+}
 
 
 
@@ -238,3 +243,5 @@ form fieldset legend
   color:         #15428B;
   padding:       5px 10px 5px 10px;
 }
+
+
