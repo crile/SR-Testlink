@@ -6,6 +6,7 @@
 
 HTML FORM 
 
+2017-02-14(Cyril SANTUNE): Fix infinite loop and bad algorithm
 2017-02-10(Cyril SANTUNE): Diplay "filter" on the testplans based on its first letter
 2017-01-12(Cyril SANTUNE): Code cleaning
 2017-01-11(Cyril SANTUNE): Modification de la partie testplans
@@ -73,8 +74,8 @@ if(isset($_GET['pj_id'])) {
 	// flag to know what to do about the ul tag (open, close, in)
 	$ul_state = "open";
 	foreach($db_table_testplans as &$testplan) {
-		while($testplan["name"][0] != $prefix) {
-			$prefix++;
+		if($testplan["name"][0] != $prefix) {
+			$prefix = $testplan["name"][0];
 			if($ul_state == "in")
 				$ul_state = "close";
 		}

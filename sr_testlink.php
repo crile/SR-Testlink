@@ -124,7 +124,7 @@ echo("<HTML>
 			<TR>
 				<TD style='width:80%'></TD>
 				<TD style='text-align:right'>
-					<A STYLE='font-size:12px' HREF='sr_changelog.html'>Version 3.1</A>
+					<A STYLE='font-size:12px' HREF='sr_changelog.html'>Changelog</A>
 				</TD>
 			</TR>
 		</TABLE>
