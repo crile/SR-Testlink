@@ -6,6 +6,23 @@
 **Simple Report For Testlink Changelog**
 
 
+
+# Release: 3.2 - 2017-03-24
+
+
+### Summary
+
+* Improve result table display
+
+### Details
+
+* **CSS**
+	* Cleaning and update
+* **PHP/HTML**
+	* Improve result table display
+
+
+
 # Release: 3.1 - 2017-02-10
 
 
@@ -18,7 +35,7 @@
 * **CSS**
 	* Add new ``li`` class for the ``FORM``
 * **PHP/HTML**
-	* Diplay "filter" on the testplans ``FORM`` based on its first letter
+	* Display "filter" on the test plans ``FORM`` based on its first letter
 
 
 

@@ -3,8 +3,9 @@
 
 /* 
 
-Feuille de style
+CSS file
 
+2017-03-24(Cyril SANTUNE): Cleaning and update on result table
 2017-02-10(Cyril SANTUNE): Add new "li" class for the form
 2017-01-12(Cyril SANTUNE): Change the color and remove useless Class
 2015-10-12(Cyril SANTUNE): ajout des couleurs pour les status
@@ -18,16 +19,7 @@ du tableau résultat
 
 
 
-
-html, body, form, fieldset, h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul,
-ol, dl, address
-{
-  margin:        0;
-  padding:       0;
-}
-
-body
-{
+body {
   background:    #EEE; 
   font-family:   'Trebuchet MS', Arial;
   font-size:     14px;
@@ -35,28 +27,10 @@ body
   padding:       0px;
 }
 
-span, div
-{
-  margin:        0px;
-  padding:       0px;
-}
-table td
-{
-  border-collapse: collapse;
-  border:          none;
-  border-spacing:  0;
-  margin:          0;
-  padding:         0;
-}
-
-
-
 
 
 /* form */
-
-form
-{
+form {
   margin:        0;
   padding:       0;
   text-align:    left;
@@ -69,7 +43,6 @@ form
   margin-right:  0px;
   border:        none;
 }
-
 form fieldset {
   clear:         both;
   border-color:  #99BBE8;
@@ -78,9 +51,7 @@ form fieldset {
   padding:       10px;
   margin:        0;
 }
-
-form fieldset legend
-{
+form fieldset legend {
   overflow:     hidden;
   color:        #15428b;
   font:         bold 100% 'Trebuchet MS';
@@ -88,33 +59,25 @@ form fieldset legend
   border:       1px solid #99bbe8;
   line-height:  15px;
 }
-
-#sr_form ul
-{
+#sr_form ul {
   padding-left: 15px;
 }
-
-#sr_form table
-{
+#sr_form table {
   background:    #EEE; 
   border:        none;
   font:          100% 'Trebuchet MS';
-  margin:          0;
-  width:           100%;
+  margin:        0;
+  width:         100%;
 }
-
-/* pour un tableau imbriqué dans un fieldset */ 
 #sr_form fieldset table
 {
   border-spacing:  5px;
   width: auto;
 }
-.sr_form_table_legend_td
-{
+.sr_form_table_legend_td {
   width:           10px;
 }
-.sr_form_button
-{
+.sr_form_button {
   font: bold 12px 'Trebuchet MS';
   text-decoration: none;
   background-color: #FFFFFF;
@@ -133,115 +96,60 @@ form fieldset legend
 
 
 
-
-
-/* tableau status */
-
-#sr_table_status table
-{
-  border-spacing:  0px;
-  font:            14px 'Trebuchet MS';
-  margin-bottom:   0px;
-  margin-left:     0px;
-  margin-right:    0px;
-  margin-top:      0px;
+/* result table*/
+#table_result, #table_result th, #table_result td {
+  border-bottom:   1px solid #99BBE8;
+  border-collapse: collapse;
+  border-left:     1px solid #99BBE8;
+  border-right:    1px solid #99BBE8;
+  border-top:      1px solid #99BBE8;
+  color:           #000000;
+  font:            100% 'Trebuchet MS';
+  margin:          auto;
+  padding:         5px 10px 5px 10px;
 }
-#sr_table_status td
-{
-  height:          30px;
-  /* ecart entre le contenu de la cellule et le bord */
-  padding-left:    5px;
-  padding-right:   5px;
-  text-align:      center;
+#table_result th {
+  color:           #15428B;
+  font:            bold 100% 'Trebuchet MS';
 }
-/* couleur pour la table status et légende */
-.sr_table_status_not_run
-{
-  background:      #D0D0D0;
+#table_result td {
+  padding:         0px 2px 0px 2px;
 }
-.sr_table_status_passed
-{
-  background:      #C6EFCF;
+#table_result .pie_chart {
+  padding:         2px 5px 2px 10px;
 }
-.sr_table_status_failed
-{
-  background:      #FFC7CF;
-}
-.sr_table_status_blocked
-{
-  background:      #9BC2E7;
-}
-
-
-
-
-
-
-/* tableau percent */
-
+/* percent table */
 #sr_table_percent
 {
-  font:            14px 'Trebuchet MS';
+  font:            inherit;
   margin:          0px;
   padding:         0px;
-}
-#sr_table_percent table
-{
   border-spacing:  0px;
-  font:            inherit;
   margin: auto;
+  border: none;
 }
 #sr_table_percent td
 {
+  border: none;
   padding-bottom:  5px;
   padding-left:    0px;
   padding-right:   0px;
   padding-top:     5px;
   width:           8px;
 }
-
-
-
-/* tableau résultat */
-.table_result
-{
-  font:            100% 'Trebuchet MS';
-  color:           #000000;
-  margin:          auto;
-  border-collapse: collapse;
-  border-top:      1px solid #99BBE8;
-  border-left:     1px solid #99BBE8;
-  border-right:    1px solid #99BBE8;
-  border-bottom:   1px solid #99BBE8;
-  padding:         5px 10px 5px 10px;
+.sr_table_status_not_run {
+  background:      #D0D0D0;
+  text-align:      center;
 }
-.table_result_td
-{
-  border-top:      1px solid #99BBE8;
-  border-left:     1px solid #99BBE8;
-  border-right:    1px solid #99BBE8;
-  border-bottom:   1px solid #99BBE8;
-  padding:         0px 2px 0px 2px;
+.sr_table_status_passed {
+  background:      #C6EFCF;
+  text-align:      center;
 }
-/* pour la colonne status dans le tableau de résultat */
-.table_result_td_status
-{
-  border-left:     none;
-  border-right:    none;
-  border-top:      1px solid #99BBE8;
-  border-bottom:   1px solid #99BBE8;
-  padding-right:   5px;
-  padding-left:    5px;
+.sr_table_status_failed {
+  background:      #FFC7CF;
+  text-align:      center;
 }
-.table_result_th
-{
-  border-top:      1px solid #99BBE8;
-  border-left:     1px solid #99BBE8;
-  border-right:    1px solid #99BBE8;
-  border-bottom:   1px solid #99BBE8;
-  font:          bold 100% 'Trebuchet MS';
-  color:         #15428B;
-  padding:       5px 10px 5px 10px;
+.sr_table_status_blocked {
+  background:      #9BC2E7;
+  text-align:      center;
 }
-
-

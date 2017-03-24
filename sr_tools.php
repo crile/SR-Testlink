@@ -6,6 +6,7 @@
 
   fonction diverses
 
+  2017-03-24(Cyril SANTUNE): Improve result table diplay
   2017-01-11(Cyril SANTUNE): nettoyage
   2015-10-08(Cyril SANTUNE): réécriture de la fonction get_percent_html_table()
 	et utilisation du fichier css
@@ -27,12 +28,10 @@ function get_status_html_table($not_run, $passed, $failed, $blocked) {
 		$failed = 0;
 	if($blocked == "")
 		$blocked = 0;
-	$output = $output."<DIV id='sr_table_status'><TABLE><TR>";
 	$output = $output."<TD CLASS='sr_table_status_not_run'>".$not_run."</TD>";
 	$output = $output."<TD CLASS='sr_table_status_passed'>".$passed."</TD>";
 	$output = $output."<TD CLASS='sr_table_status_failed'>".$failed."</TD>";
 	$output = $output."<TD CLASS='sr_table_status_blocked'>".$blocked."</TD>";
-	$output = $output."</TR></TABLE></DIV>";
 	return $output;
 }
 
@@ -45,7 +44,7 @@ function get_percent_html_table($percent) {
 	$percent_array = str_split($percent);
 	// ajouter le symbole %
 	array_push($percent_array, '%');
-	$output = "<DIV id='sr_table_percent'><TABLE><TR>";
+	$output = "<TABLE id='sr_table_percent'><TR>";
 	$i = 1;
 	$j = 0;
 	while($i <= 10) {
@@ -69,7 +68,7 @@ function get_percent_html_table($percent) {
 		$output = $output."</TD>";
 		$i = $i + 1;
 	}
-	$output = $output."</TR></TABLE></DIV>";
+	$output = $output."</TR></TABLE>";
 	return $output;
 }
 

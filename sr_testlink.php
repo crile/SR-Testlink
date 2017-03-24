@@ -6,6 +6,7 @@
 
 Main Page
 
+2017-03-24(Cyril SANTUNE): Improve result table display
 2017-01-11(Cyril SANTUNE): suppression de la colonne coverage
 2015-10-01(Cyril SANTUNE): suppression de la ligne *total* du tableau
 2015-09-30(Cyril SANTUNE): rendre la page accessible sans login
@@ -138,14 +139,14 @@ include("sr_form.php");
 
 
 // afficher les resultats
-echo("<TABLE CLASS='table_result'>
+echo("<TABLE ID='table_result'>
 	<TR>
-	<TH CLASS='table_result_th'>Testsuite</TD>
-	<TH CLASS='table_result_th' COLSPAN=2>Status</TD>");
+	<TH>Testsuite</TD>
+	<TH COLSPAN=5>Status</TD>");
 if($show_coverage)
-	echo("<TH CLASS='table_result_th'>Coverage %</TD>");
+	echo("<TH>Coverage %</TD>");
 else
-	echo("<TH CLASS='table_result_th'>Executed %</TD>");
+	echo("<TH>Executed %</TD>");
 echo("</TR>");
 if(isset($table_results)) {
 	foreach($table_results as &$testsuite) {
@@ -169,14 +170,14 @@ if(isset($table_results)) {
 			$class_name = $class_name." hide_passed";
 		// dans le javascript je peux ensuite utiliser ce class_name comme
 		// critère pour cacher ou non une ligne
-		echo("<TR CLASS='".$class_name."'> <TD CLASS='table_result_td'>");
+		echo("<TR CLASS='".$class_name."'><TD>");
 		// créer des espaces en fonction du level
 		echo(str_repeat("&nbsp;", $testsuite["level"] * 3));
 		echo($testsuite["name"]);
-		echo("</TD><TD CLASS='table_result_td_status'>");
+		echo("</TD>");
 		echo(get_status_html_table($testsuite["notrun"], $testsuite["passed"],
 			$testsuite["failed"], $testsuite["blocked"]));
-		echo("</TD><TD CLASS='table_result_td_status'><DIV><CANVAS
+		echo("<TD CLASS='pie_chart'><DIV><CANVAS
 			ID='".$testsuite["id"]."' WIDTH='40' HEIGHT='40'> </CANVAS></DIV>");
 		echo("<SCRIPT TYPE='text/javascript'>");
 		echo("draw_pie_chart(".$testsuite["id"].", ".$testsuite["notrun"].",
