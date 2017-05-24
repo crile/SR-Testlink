@@ -5,15 +5,11 @@
 
 Simple report for [Testlink](http://www.testlink.org).
 
-I am not a developer, I don't understand the "_Testlink_" source code. However,
-I need multi builds/testplans report view, So... All comments are in french
-right now, I will try to change that later.
+I am not a developer, I don't understand the _Testlink_ source code. However, I need multi builds/testplans report view, So...
 
-I just create one view. I do not modify the database content. However, as I say
-before, I am not an expert, the SQL request can have an impact on performance.
+I just create one SQL view. All SQL requests are in ``sr_sql.php`` file (``$sql`` variables). I do not modify the database content. However, the SQL request can have an impact on performance.
 
-Currently, the report page doesn't require login, it is a read only view (see
-"_Force the user login_" section to modify this).
+Currently, the report page doesn't require login, it is a read only view (see "_Force the user login_" section to modify this).
 
 **NO WARRANTY**
 
@@ -35,10 +31,9 @@ DAMAGES.
 
 ### Installation
 
-Just copy all files in "_Testlink_" root directory.
+Just copy all files in your ``Testlink`` root directory.
 
-A SQL view must be created in the database. Simply add "admin" as **URL**
-parameter to create it.
+A SQL view must be created in the database. Simply add ``admin`` as **URL** parameter to create it.
 
 ``http://<hostname>/sr_testlink.php?admin=1``
 
@@ -51,6 +46,13 @@ go.
 ### Screenshot
 
 ![](screenshot.png)
+
+
+### Notes
+
+_IExplore 11_ doesn't work properly, try with _Edge_, _Firefox_ or _Chrome_.
+
+All comments are in french right now, I will try to change that later.
 
 
 ### Force the user login
@@ -100,20 +102,16 @@ if($redir2login) {
 
 **Chart.js**
 
-I use the open source Javascript library "_Chart.js_". More details on
-[http://www.chartjs.org](http://www.chartjs.org). I just rename it to
-``sr_chart.js``.
+I use the open source _Javascript_ library _Chart.js_. More details on [http://www.chartjs.org](http://www.chartjs.org). I just rename it to ``sr_chart.js``.
 
 
 ### License
 
-"_SR-Testlink_" is available under the [Apache license version
-2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+_SR-Testlink_ is available under the [Apache license version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 **Third-party**
 
-"_Chart.js_" is available under the [MIT
-license](http://opensource.org/licenses/MIT).
+_Chart.js_ is available under the [MIT license](http://opensource.org/licenses/MIT).
 
 
 
